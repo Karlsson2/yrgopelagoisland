@@ -1,10 +1,10 @@
 WHY NOT A GIF HERE? TO SET THE MOOD.
 
-# Island name
+# LuxuryIsland
 
 Some text about your lovely island
 
-# Hotel name
+# LuxuryHotel
 
 Why not add some info about the hotel of your dreams?
 
