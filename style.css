@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  padding: 0px;
+  margin: 0px;
+}
+.input-wrapper {
+  position: relative;
+}
+.icon-container {
+  position: absolute;
+  top: 50%;
+  transform: translate(42%, -42%);
+}
+input {
+  padding: 10px 37px;
+  width: 100%;
+}
+form {
+  width: 25%;
+}

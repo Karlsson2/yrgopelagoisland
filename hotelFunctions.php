@@ -50,3 +50,46 @@ function isValidUuid(string $uuid): bool
     }
     return true;
 }
+
+
+
+if (
+    isset($_POST["firstname"]) &&
+    isset($_POST["lastname"]) &&
+    isset($_POST["email"]) &&
+    isset($_POST["guests"]) &&
+    isset($_POST["datefilter"]) &&
+    isset($_POST["transfercode"]) &&
+    isset($_POST["requests"]) &&
+    isset($_POST["meal_preference"])
+) {
+
+
+    // Use htmlspecialchars to sanitize user input
+    $firstName = htmlspecialchars($_POST["firstname"]);
+    $lastName = htmlspecialchars($_POST["lastname"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $guests = htmlspecialchars($_POST["guests"]);
+    $dates = htmlspecialchars($_POST["datefilter"]);
+    $transfercode = htmlspecialchars($_POST["transfercode"]);
+    $requests = htmlspecialchars($_POST["requests"]);
+    $mealPreference = htmlspecialchars($_POST["meal_preference"]);
+
+    $fullDates = explode("-", $dates);
+    $startDate =  $fullDates[0];
+    $endDate =  $fullDates[1];
+    print_r($fullDates);
+    echo "FullDate: " . $fullDates . "<br>";
+    echo "First Name: " . $firstName . "<br>";
+    echo "Last Name: " . $lastName . "<br>";
+    echo "Email: " . $email . "<br>";
+    echo "Number of Guests: " . $guests . "<br>";
+    echo "Date: " . $startDate . $endDate . "<br>";
+    echo "Transfercode: " . $transfercode . "<br>";
+    echo "Special Requests: " . $requests . "<br>";
+    echo "Meal Preference: " . $mealPreference . "<br>";
+} else {
+    // Handle the case where one or more variables are not set
+    // You might want to display an error message or take appropriate action
+    echo "Error: Missing one or more form fields.";
+}
