@@ -1,9 +1,14 @@
+@import url('https://fonts.cdnfonts.com/css/jurassic-park');
+
 * {
   box-sizing: border-box;
 }
+
 body {
   padding: 0px;
   margin: 0px;
+  font-family: 'Inter', sans-serif;
+  background: rgb(163, 162, 162);
 }
 .input-wrapper {
   position: relative;
@@ -19,4 +24,55 @@ input {
 }
 form {
   width: 25%;
+}
+
+.header-image {
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin-top: -65px;
+}
+.container {
+  margin: 0 auto;
+  width: 80%;
+}
+.room-info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 38px;
+}
+
+.small-images {
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+}
+
+.small-images img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border: 5px solid green;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  position: sticky;
+  z-index: 2;
+  color: white;
+}
+.logo {
+  font-family: 'Jurassic Park', sans-serif;
+  font-size: 64px;
+}
+.options {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  align-items: center;
 }
