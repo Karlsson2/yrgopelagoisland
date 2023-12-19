@@ -1,7 +1,10 @@
 <?php
+
 require 'vendor/autoload.php';
 require __DIR__ . "/header.php";
 require __DIR__ . "/hotelFunctions.php";
+
+
 
 if (isset($_GET["room"])) {
     //if the ID has been set, get the room from the database. then generate the room content on the page.
@@ -22,9 +25,21 @@ if (isset($_GET["room"])) {
         <div class="room-cost">$<?= $room["price_per_night"] ?>/night</div>
 
     </div>
+    <div class="errors">
+        <?php
+        // Check if there are any errors
+        if (!empty($_SESSION['errors'])) {
+            echo '<ul>';
+            foreach ($_SESSION['errors'] as $error) {
+                echo '<li>' . htmlspecialchars($error) . '</li>';
+            }
+            echo '</ul>';
+            $_SESSION['errors'] = [];
+        }
+        ?>
+    </div>
     <div class="form-div">
         <form action="hotelFunctions.php" method="POST">
-
             <label for="datefilter">Select a Date</label>
             <div class="input-wrapper">
                 <div class="icon-container"><i class="fa-regular fa-calendar"></i></div>
@@ -33,7 +48,7 @@ if (isset($_GET["room"])) {
             <input type="hidden" name="id" value="<?= $room["id"] ?>">
             <input type="hidden" name="pricePerNight" value="<?= $room["price_per_night"] ?>">
             <label for="transfercode">Transfercode</label>
-            <input type="text" name="transfercode" placeholder="xxxxxxxx-xxxx-xxx-xxx-xxxxxxxxxxxxx" required>
+            <input type="text" name="transfercode" placeholder="enter your transfercode here" required>
             <label for="meal_preference">Meal Preference</label>
             <select name="meal_preference" id="meal_preference">
                 <option value="" disabled selected hidden>None +$0</option>
