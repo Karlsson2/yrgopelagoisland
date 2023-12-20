@@ -187,59 +187,64 @@ function makeBooking()
         $totalDates = totalDates($startDate, $endDate);
         $totalCost = ($pricePerNight * $totalDates) + $mealPreferenceCost;
 
+        if (isBookingOverlapping($startDate, $endDate, $roomId)) {
+            $_SESSION['errors'][] = 'The booking overlaps another booking!';
+            redirect("room.php?room=" . $_POST["id"]);
+            exit;
+        } else {
+            if (isValidUuid($transferCode)) {
 
-        if (isValidUuid($transferCode)) {
+                try {
+                    $response = $client->request('POST', 'transferCode', [
+                        'form_params' => [
+                            'transferCode' => $transferCode,
+                            'totalcost' => $totalCost
+                        ]
+                    ]);
 
-            try {
-                $response = $client->request('POST', 'transferCode', [
-                    'form_params' => [
-                        'transferCode' => $transferCode,
-                        'totalcost' => $totalCost
-                    ]
-                ]);
+                    $response = json_decode($response->getBody()->getContents());
 
-                $response = json_decode($response->getBody()->getContents());
+                    if (isset($response->error)) {
+                        $_SESSION['errors'][] = 'The key is not validated at the server try a different one!';
+                        redirect("room.php?room=" . $_POST["id"]);
+                        exit;
+                    } else {
+                        if ($response->amount >= $totalCost) {
 
-                if (isset($response->error)) {
-                    $_SESSION['errors'][] = 'The key is not validated at the server try a different one!';
-                    redirect("room.php?room=" . $_POST["id"]);
-                    exit;
-                } else {
-                    if ($response->amount >= $totalCost) {
+                            $bookingId = (int) insertBooking($startDate, $endDate, $mealPreference, $transferCode, $roomId, $totalCost);
+                            //if the booking insertion is successfull, claim the money from the big bank
+                            if (isset($bookingId)) {
+                                try {
+                                    $claimed = $client->request('POST', 'deposit', [
+                                        'form_params' => [
+                                            'user' => $_ENV['USER_NAME'],
+                                            'transferCode' => $transferCode
+                                        ]
+                                    ]);
+                                    bookingResponse($bookingId);
+                                } catch (Exception $e) {
 
-                        $bookingId = (int) insertBooking($startDate, $endDate, $mealPreference, $transferCode, $roomId, $totalCost);
-                        //if the booking insertion is successfull, claim the money from the big bank
-                        if (isset($bookingId)) {
-                            try {
-                                $claimed = $client->request('POST', 'deposit', [
-                                    'form_params' => [
-                                        'user' => $_ENV['USER_NAME'],
-                                        'transferCode' => $transferCode
-                                    ]
-                                ]);
-                                bookingResponse($bookingId);
-                            } catch (Exception $e) {
-
-                                echo $e->getMessage();
+                                    echo $e->getMessage();
+                                }
+                            } else {
+                                $_SESSION['errors'][] = "Error: The money could not be deposited, try again.";
+                                redirect("room.php?room=" . $_POST["id"]);
+                                exit;
                             }
                         } else {
-                            $_SESSION['errors'][] = "Error: The money could not be deposited, try again.";
+                            $_SESSION['errors'][] = "Error: Your transfercode doesn't cover the total cost.<br/> Total Cost: $totalCost <br/>Transfercode Amount:$response->amount";
                             redirect("room.php?room=" . $_POST["id"]);
                             exit;
                         }
-                    } else {
-                        $_SESSION['errors'][] = "Error: Your transfercode doesn't cover the total cost.<br/> Total Cost: $totalCost <br/>Transfercode Amount:$response->amount";
-                        redirect("room.php?room=" . $_POST["id"]);
-                        exit;
                     }
+                } catch (Exception $e) {
+                    echo $e->getMessage();
                 }
-            } catch (Exception $e) {
-                echo $e->getMessage();
+            } else {
+                $_SESSION['errors'][] = "Error: Transfercode is not correct";
+                redirect("room.php?room=" . $_POST["id"]);
+                exit;
             }
-        } else {
-            $_SESSION['errors'][] = "Error: Transfercode is not correct";
-            redirect("room.php?room=" . $_POST["id"]);
-            exit;
         }
     } else {
         // Handle the case where one or more variables are not set
@@ -369,4 +374,27 @@ function loadMadeBookings(int $roomId)
         }
     }
     return json_encode($disabledDates);
+}
+
+
+function isBookingOverlapping(string $arrivalDate, string $departureDate, string $roomId): bool
+{
+    $dbName = "hotel.db";
+    $db = connect($dbName);
+
+    // Prepare the SQL statement
+    $query = $db->prepare("SELECT COUNT(*) AS count_overlap
+              FROM booking
+              WHERE room_id = :room_id
+                AND ((arrival_date <= :arrival_date AND departure_date >= :arrival_date)
+                     OR (arrival_date <= :departure_date AND departure_date >= :departure_date)
+                     OR (arrival_date >= :arrival_date AND departure_date <= :departure_date))");
+    $query->bindParam(':room_id', $roomId, PDO::PARAM_INT);
+    $query->bindParam(':arrival_date', $arrivalDate);
+    $query->bindParam(':departure_date', $departureDate);
+    $query->execute();
+
+    $result = $query->fetch(PDO::FETCH_ASSOC);
+
+    return $result['count_overlap'] > 0;
 }
