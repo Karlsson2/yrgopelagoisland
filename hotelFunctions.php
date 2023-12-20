@@ -188,7 +188,7 @@ function makeBooking()
         $totalCost = ($pricePerNight * $totalDates) + $mealPreferenceCost;
 
         if (isBookingOverlapping($startDate, $endDate, $roomId)) {
-            $_SESSION['errors'][] = 'The booking overlaps another booking!';
+            $_SESSION['errors'][] = 'The booking overlaps another booking or is outside the allowed booking scope!';
             redirect("room.php?room=" . $_POST["id"]);
             exit;
         } else {
@@ -379,6 +379,10 @@ function loadMadeBookings(int $roomId)
 
 function isBookingOverlapping(string $arrivalDate, string $departureDate, string $roomId): bool
 {
+    echo "$arrivalDate" . "01-01-2024" . $departureDate . "31-01-2024";
+    if ($arrivalDate < '01-01-2024' || $departureDate > '31-01-2024') {
+        return true; // Booking is outside the allowed date range of january 2024
+    }
     $dbName = "hotel.db";
     $db = connect($dbName);
 
