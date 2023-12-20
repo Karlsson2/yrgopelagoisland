@@ -30,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
-
 function client()
 {
     $client = new Client([
@@ -207,6 +206,7 @@ function makeBooking()
                     exit;
                 } else {
                     if ($response->amount >= $totalCost) {
+
                         $bookingId = (int) insertBooking($startDate, $endDate, $mealPreference, $transferCode, $roomId, $totalCost);
                         //if the booking insertion is successfull, claim the money from the big bank
                         if (isset($bookingId)) {
@@ -222,6 +222,10 @@ function makeBooking()
 
                                 echo $e->getMessage();
                             }
+                        } else {
+                            $_SESSION['errors'][] = "Error: The money could not be deposited, try again.";
+                            redirect("room.php?room=" . $_POST["id"]);
+                            exit;
                         }
                     } else {
                         $_SESSION['errors'][] = "Error: Your transfercode doesn't cover the total cost.<br/> Total Cost: $totalCost <br/>Transfercode Amount:$response->amount";
@@ -233,7 +237,7 @@ function makeBooking()
                 echo $e->getMessage();
             }
         } else {
-            $_SESSION['errors'][] = "Error: Transfercode is not valid";
+            $_SESSION['errors'][] = "Error: Transfercode is not correct";
             redirect("room.php?room=" . $_POST["id"]);
             exit;
         }
@@ -334,4 +338,35 @@ function getFeature(int $featureId)
     // Fetch the result as an associative array
     $feature = $query->fetch(PDO::FETCH_ASSOC);
     return $feature;
+}
+
+function getBookings(int $roomId)
+{
+    $dbName = "hotel.db";
+    $db = connect($dbName);
+    $query = "SELECT arrival_date, departure_date FROM booking WHERE room_id=:roomId";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+    $stmt->execute();
+    $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $bookings;
+}
+
+function loadMadeBookings(int $roomId)
+{
+    // Generate an array of disabled individual dates
+    $bookings = getBookings($roomId);
+    $disabledDates = [];
+    foreach ($bookings as $booking) {
+        $startDate = new DateTime($booking['arrival_date']);
+        $endDate = new DateTime($booking['departure_date']);
+
+        // Iterate over each date within the range
+        $currentDate = clone $startDate;
+        while ($currentDate <= $endDate) {
+            $disabledDates[] = $currentDate->format('Y-m-d');
+            $currentDate->modify('+1 day');
+        }
+    }
+    return json_encode($disabledDates);
 }

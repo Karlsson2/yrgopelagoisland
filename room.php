@@ -11,6 +11,8 @@ if (isset($_GET["room"])) {
     $room = getOneRoom($_GET["room"]);
 }
 
+
+
 ?>
 
 <div class="header-image" style="background-image: url('<?= $room["image1"] ?>');">
@@ -64,10 +66,69 @@ if (isset($_GET["room"])) {
 
     </div>
 </div>
+
+
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script type="text/javascript" src="script.js"></script>
+<script>
+    <?php
+    // Your PHP code to generate the disabledDates array
+    $disabledDates = loadMadeBookings((int)$room["id"]);
+    echo "var disabledDates = " . $disabledDates . ";";
+    ?>
+    console.log(disabledDates);
+    $(function() {
+        $('#datefilter').daterangepicker({
+                minDate: '01/01/2024',
+                maxDate: '31/01/2024',
+                autoUpdateInput: false,
+                autoApply: true,
+                locale: {
+                    cancelLabel: 'Clear',
+                    format: 'DD/MM/YYYY',
+                },
+                isInvalidDate: function(date) {
+                    // Check if the date is in the array of disabled dates
+                    var dateString = date.format('YYYY-MM-DD');
+                    return disabledDates.includes(dateString);
+                },
+            },
+            function(start, end, label) {
+                console.log(
+                    'New date range selected: ' +
+                    start.format('DD-MM-YYYY') +
+                    ' to ' +
+                    end.format('DD-MM-YYYY') +
+                    ' (predefined range: ' +
+                    label +
+                    ')'
+                );
+            }
+        );
+
+        $('input[name="datefilter"]').on(
+            'apply.daterangepicker',
+            function(ev, picker) {
+                $(this).val(
+                    picker.startDate.format('DD/MM/YYYY') +
+                    ' - ' +
+                    picker.endDate.format('DD/MM/YYYY')
+                );
+            }
+        );
+
+        $('input[name="datefilter"]').on(
+            'cancel.daterangepicker',
+            function(ev, picker) {
+                $(this).val('');
+            }
+        );
+    });
+</script>
+
 </body>
 
 </html>
