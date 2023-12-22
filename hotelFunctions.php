@@ -108,6 +108,25 @@ function getOneRoom(string $roomId): array
     $room = $query->fetch(PDO::FETCH_ASSOC);
     return $room;
 }
+
+function getAllRooms(): array
+{
+    // Connect to the database using the connect function
+    $dbName = "hotel.db";
+    $db = connect($dbName);
+
+
+    // Prepare the SQL statement
+    $query = $db->prepare('SELECT * FROM rooms');
+
+    // Execute the query
+    $query->execute();
+
+    // Fetch the result as an associative array
+    $rooms = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $rooms;
+}
+
 function insertBooking(string $startDate, string $endDate, int $mealPreference, string $transfercode, string $roomId, int $totalCost)
 {
     $dbName = "hotel.db";
@@ -379,7 +398,6 @@ function loadMadeBookings(int $roomId)
 
 function isBookingOverlapping(string $arrivalDate, string $departureDate, string $roomId): bool
 {
-    echo "$arrivalDate" . "01-01-2024" . $departureDate . "31-01-2024";
     if ($arrivalDate < '01-01-2024' || $departureDate > '31-01-2024') {
         return true; // Booking is outside the allowed date range of january 2024
     }

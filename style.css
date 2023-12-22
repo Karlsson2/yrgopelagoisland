@@ -1,14 +1,24 @@
 @import url('https://fonts.cdnfonts.com/css/jurassic-park');
-
+:root {
+  --pearl: #dfd9da;
+  --ocean: #3d4f61;
+  --sand: #c4b2a7;
+  --coconut: #5f5052;
+  --gun-powder: #413f51;
+  --coral: #e46464;
+  --line_color: #e46464;
+}
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   padding: 0px;
   margin: 0px;
   font-family: 'Inter', sans-serif;
-  background: rgb(163, 162, 162);
+  background: var(--pearl);
 }
 .input-wrapper {
   position: relative;
@@ -64,7 +74,7 @@ form {
   margin: 0 auto;
   position: sticky;
   z-index: 2;
-  color: white;
+  color: var(--pearl);
 }
 .logo {
   font-family: 'Jurassic Park', sans-serif;
@@ -75,4 +85,190 @@ form {
   justify-content: space-around;
   gap: 20px;
   align-items: center;
+}
+
+.dark-background {
+  background-color: var(--gun-powder);
+  color: var(--pearl);
+}
+.light-background {
+  background-color: var(--pearl);
+  color: var(--gun-powder);
+}
+.room-image img {
+  width: 100%;
+  height: 200px;
+}
+.index-header-image {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin-top: -65px;
+}
+.header-title {
+  font-family: 'Jurassic Park', sans-serif;
+  font-size: 154px;
+}
+.header-text-container {
+  color: var(--pearl);
+  height: calc(100% - 25px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  margin: -50px auto;
+  z-index: 2;
+  position: relative;
+}
+.container-title {
+  font-size: 64px;
+  font-weight: 600;
+  padding-bottom: 80px;
+}
+.before {
+  background-color: var(--gun-powder);
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  left: 0;
+  top: 0;
+  content: '';
+  opacity: 0.45;
+}
+.chevron-container {
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+  background: var(--pearl);
+  border-radius: 50%;
+  color: var(--gun-powder);
+  padding: 5p;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.room-container,
+.about-us-container,
+.activities-container {
+  padding: 80px 0px;
+}
+
+.card-container {
+  display: flex;
+  gap: 10px;
+  justify-content: space-evenly;
+}
+
+.room-card {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.87);
+  background: var(--gun-powder);
+  color: var(--pearl);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.image-container {
+  height: 300px;
+
+  overflow: hidden;
+  position: relative;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: -30px;
+  border-radius: 6px;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  background-position: center;
+  background-size: cover;
+}
+
+.room-image {
+  height: 100%;
+  width: 100%;
+  transition: transform 0.3s ease-in-out; /* Add smooth transition for the zoom effect */
+}
+
+.room-card:hover .room-image {
+  transform: scale(1.2);
+}
+.room-card:hover {
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 54%), 0 3px 1px -2px rgba(0, 0, 0, 0.54),
+    0 1px 5px 0 rgba(0, 0, 0, 0.54);
+}
+
+.card-room-info {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.info-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-title {
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.about-us-container {
+  display: flex;
+  gap: 15%;
+}
+
+.about-us {
+  font-size: 64px;
+  font-weight: 600;
+  text-wrap: nowrap;
+}
+.coral-text {
+  color: var(--coral);
+  font-weight: 600;
+}
+.about-us-text {
+  font-weight: 100;
+  font-size: 20px;
+}
+
+.info-more {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/*buttons*/
+.button {
+  position: relative;
+  background: var(--coral);
+  display: flex;
+  padding: 10px 30px;
+  text-decoration: none;
+  color: var(--pearl);
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+.button-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
