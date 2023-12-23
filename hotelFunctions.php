@@ -126,6 +126,23 @@ function getAllRooms(): array
     $rooms = $query->fetchAll(PDO::FETCH_ASSOC);
     return $rooms;
 }
+function getAllFeatures(): array
+{
+    // Connect to the database using the connect function
+    $dbName = "hotel.db";
+    $db = connect($dbName);
+
+
+    // Prepare the SQL statement
+    $query = $db->prepare('SELECT * FROM features');
+
+    // Execute the query
+    $query->execute();
+
+    // Fetch the result as an associative array
+    $features = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $features;
+}
 
 function insertBooking(string $startDate, string $endDate, int $mealPreference, string $transfercode, string $roomId, int $totalCost)
 {
