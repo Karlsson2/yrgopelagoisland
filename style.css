@@ -397,6 +397,10 @@ form {
   justify-content: space-between;
   align-items: center;
 }
+.sign-up button:hover {
+  cursor: pointer;
+  background-color: #2a3743;
+}
 .footer-title {
   margin-bottom: 15px;
   font-weight: 700;

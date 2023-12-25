@@ -10,7 +10,7 @@ $features = getallFeatures();
     <div class="before"></div>
     <div class="header-text-container">
         <div class="header-title">Jurassic Hotel</div>
-        <div class="header-subtitle">More than a hotel... here life will find a way</div>
+        <div class="header-subtitle"><span class="coral-text">More than a hotel...</span> here life will find a way</div>
     </div>
     <div class="chevron-container"><a href="#about-us"><i class="fa-solid fa-chevron-down"></i></a></div>
 </div>
@@ -28,8 +28,6 @@ $features = getallFeatures();
         <div class="container-title">Our Rooms</div>
         <div class="card-container">
             <?php foreach ($rooms as $room) : ?>
-
-
                 <div class="room-card">
                     <div class="image-container">
                         <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;

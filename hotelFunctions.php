@@ -88,7 +88,7 @@ function isValidUuid(string $uuid): bool
 }
 
 
-function getOneRoom(string $roomId): array
+function getOneRoom(int $roomId): array
 {
     // Connect to the database using the connect function
     $dbName = "hotel.db";
@@ -144,7 +144,7 @@ function getAllFeatures(): array
     return $features;
 }
 
-function insertBooking(string $startDate, string $endDate, int $mealPreference, string $transfercode, string $roomId, int $totalCost)
+function insertBooking(string $startDate, string $endDate, array $selectedFeatures, string $transfercode, string $roomId, float $totalCost)
 {
     $dbName = "hotel.db";
     $db = connect($dbName);
@@ -164,16 +164,22 @@ function insertBooking(string $startDate, string $endDate, int $mealPreference, 
         $query->execute();
 
         $bookingId = $db->lastInsertId();
-        if ($mealPreference != 0) {
-            $query = $db->prepare("INSERT INTO booking_features (booking_id, feature_id)
-            VALUES (:bookingId, :featureId)");
 
-            // Bind parameters
-            $query->bindParam(':bookingId', $bookingId);
-            $query->bindParam(':featureId', $mealPreference);
 
-            // Execute the query
-            $query->execute();
+        //if the selectedfeature array is not empty, iterate over the features and insert them in the booking_features table
+        if (!empty($selectedFeatures)) {
+
+            foreach ($selectedFeatures as $feature) {
+                $query = $db->prepare("INSERT INTO booking_features (booking_id, feature_id)
+                VALUES (:bookingId, :featureId)");
+
+                // Bind parameters
+                $query->bindParam(':bookingId', $bookingId);
+                $query->bindParam(':featureId', $feature);
+
+                // Execute the query
+                $query->execute();
+            }
         }
         return $bookingId;
     } catch (PDOException $e) {
@@ -210,18 +216,28 @@ function makeBooking()
 
         $dates = trim(htmlspecialchars($_POST["datefilter"]));
         $transferCode = htmlspecialchars($_POST["transfercode"]);
-        $mealPreference = ($_POST["meal_preference"] ?? 0) !== 0 ? (int) htmlspecialchars($_POST["meal_preference"]) : 0;
         $pricePerNight = htmlspecialchars($_POST["pricePerNight"]);
         $roomId = htmlspecialchars($_POST["id"]);
         $fullDates = explode("-", $dates);
         $startDate =  str_replace("/", "-", trim($fullDates[0]));
         $endDate =  str_replace("/", "-", trim($fullDates[1]));
-
-        //TODO:: ALSO UDATE THE FORM TO CHECKBOX SELECTION FOR THE OPTIONS Need to make a method that iterates over all of these and return the total value if there is more than one preference/extra
-        $mealPreferenceCost = ($mealPreference == 0) ? 0 : (int) getFeature($mealPreference)["price"];
-
+        $selectedFeatures = [];
         $totalDates = totalDates($startDate, $endDate);
-        $totalCost = ($pricePerNight * $totalDates) + $mealPreferenceCost;
+        $totalFeatureCost = 0;
+
+        if (isset($_POST['selected_features'])) {
+            // Loop through the selected checkboxes
+            foreach ($_POST['selected_features'] as $selectedFeatureId) {
+                // Process each selected feature ID as needed
+                $selectedFeatures[] = (int) $selectedFeatureId;
+                $feature = getFeature((int) $selectedFeatureId);
+                $totalFeatureCost = $totalFeatureCost + $feature["price"];
+            }
+        }
+        //TODO: add featurecost to the total cost
+        $totalCost = ($pricePerNight * $totalDates) + $totalFeatureCost;
+
+
 
         if (isBookingOverlapping($startDate, $endDate, $roomId)) {
             $_SESSION['errors'][] = 'The booking overlaps another booking or is outside the allowed booking scope!';
@@ -247,7 +263,7 @@ function makeBooking()
                     } else {
                         if ($response->amount >= $totalCost) {
 
-                            $bookingId = (int) insertBooking($startDate, $endDate, $mealPreference, $transferCode, $roomId, $totalCost);
+                            $bookingId = (int) insertBooking($startDate, $endDate, $selectedFeatures, $transferCode, $roomId, $totalCost);
                             //if the booking insertion is successfull, claim the money from the big bank
                             if (isset($bookingId)) {
                                 try {
@@ -296,7 +312,8 @@ function bookingResponse(int $bookingId)
 {
     //do some shit with the data 
     $booking = getBooking($bookingId);
-    $features = getFeatuers($bookingId);
+    $features = getAllFeaturesWithBooking($bookingId);
+    $room = getOneRoom((int) $booking["room_id"]);
 
     $externalGreeting = ["greeting" => "Thank you for choosing Jurassic Hotel", "imageUrl" => "/images/thank-you.jpg"];
     $response = [
@@ -305,6 +322,7 @@ function bookingResponse(int $bookingId)
             "name" => $_ENV["HOTEL"],
             "arrival_date" => $booking["arrival_date"],
             "departure_date" => $booking["departure_date"],
+            "room_type" => $room["category"],
             "total_cost" => $booking["total_cost"],
             "stars" => $_ENV["STARS"],
             "features" => $features,
@@ -336,14 +354,14 @@ function getBooking(int $bookingId)
     $booking = $query->fetch(PDO::FETCH_ASSOC);
     return $booking;
 }
-function getFeatuers(int $bookingId)
+function getAllFeaturesWithBooking(int $bookingId)
 {
     $dbName = "hotel.db";
     $db = connect($dbName);
 
 
     // Prepare the SQL statement
-    $query = $db->prepare("SELECT features.type, features.price
+    $query = $db->prepare("SELECT features.name, features.price
     FROM booking_features 
     INNER JOIN features ON booking_features.feature_id = features.id
     WHERE booking_features.booking_id = :bookingId");
@@ -366,7 +384,7 @@ function getFeature(int $featureId)
 
 
     // Prepare the SQL statement
-    $query = $db->prepare("SELECT type, price
+    $query = $db->prepare("SELECT name, price
     FROM features
     WHERE id = :featureId");
 

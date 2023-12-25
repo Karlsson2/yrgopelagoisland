@@ -4,14 +4,12 @@ require 'vendor/autoload.php';
 require __DIR__ . "/header.php";
 require __DIR__ . "/hotelFunctions.php";
 
-
+$features = getAllFeatures();
 
 if (isset($_GET["room"])) {
     //if the ID has been set, get the room from the database. then generate the room content on the page.
     $room = getOneRoom($_GET["room"]);
 }
-
-
 
 ?>
 
@@ -51,15 +49,20 @@ if (isset($_GET["room"])) {
             <input type="hidden" name="pricePerNight" value="<?= $room["price_per_night"] ?>">
             <label for="transfercode">Transfercode</label>
             <input type="text" name="transfercode" placeholder="enter your transfercode here" required>
-            <label for="meal_preference">Meal Preference</label>
-            <select name="meal_preference" id="meal_preference">
+            <!-- <select name="meal_preference" id="meal_preference">
                 <option value="" disabled selected hidden>None +$0</option>
                 <option value="1">Breakfast +1$</option>
                 <option value="2">Half Board +2$</option>
                 <option value="3">All Inclusive +3$</option>
-
-
-            </select>
+            </select> -->
+            <?php foreach ($features as $feature) : ?>
+                <div class="room-activities-card">
+                    <img src="<?= $feature["image"] ?>" alt="">
+                    <input data-price="<?= $feature["price"] ?>" type="checkbox" name="selected_features[]" value="<?= $feature["id"] ?>">
+                    <div class="feature-description"><?= $feature["name"] ?></div>
+                    <div class="price"><?= $feature["price"] ?>$</div>
+                </div>
+            <?php endforeach; ?>
             <div class="total">$ Total</div>
             <button type="submit">Book</button>
         </form>
