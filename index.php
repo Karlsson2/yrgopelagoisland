@@ -86,7 +86,7 @@ $features = getallFeatures();
 
                     <img src="<?= $features[1]["image"] ?>" class="activities-image-<?= $key ?>" alt="">
                     <div class="button-div">
-                        <a href="/room.php?room=<?= $room["id"] ?>" class="activities-button">
+                        <a href="/activities.php" class="activities-button">
                             <span class="button-text">Read more </span><i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>

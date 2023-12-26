@@ -91,7 +91,7 @@ if (isset($_GET["room"])) {
                     </div>
                 <?php endforeach; ?>
             </div>
-            <div class="total">Total Price:</div>
+            <div class="total">Total Price: $0</div>
             <input type="hidden" name="id" value="<?= $room["id"] ?>">
             <input type="hidden" name="pricePerNight" id="pricePerNight" value="<?= $room["price_per_night"] ?>">
             <button type="submit">Book <i class="fa-solid fa-arrow-right"></i></button>

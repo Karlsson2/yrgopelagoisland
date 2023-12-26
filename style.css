@@ -632,3 +632,46 @@ input[type='checkbox']:checked {
   display: flex;
   flex-direction: column;
 }
+/*activities*/
+
+.activities {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.activity-card {
+  background: #d1cbcc;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  color: var(--gun-powder);
+}
+.activity-image {
+  width: calc(100% / 3);
+}
+.activity-card img {
+  width: calc(100% / 3);
+
+  object-fit: cover;
+}
+.activity-card-title,
+.activity-card-price {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.activities-container {
+  padding: 80px 0px;
+}
+.activity-description {
+  padding: 15px;
+}
+.activities-title {
+  font-weight: 700;
+  font-size: 38px;
+  margin-bottom: 15px;
+  color: var(--gun-powder);
+}
