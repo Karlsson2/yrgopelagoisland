@@ -240,8 +240,8 @@ function makeBooking()
 
 
         if (isBookingOverlapping($startDate, $endDate, $roomId)) {
-            $_SESSION['errors'][] = 'The booking overlaps another booking or is outside the allowed booking scope!';
-            redirect("room.php?room=" . $_POST["id"]);
+            $_SESSION['errors'][] = 'Error: The booking overlaps another booking or is outside the allowed booking scope!';
+            redirect("room.php?room=" . $_POST["id"] . "#errors");
             exit;
         } else {
             if (isValidUuid($transferCode)) {
@@ -257,8 +257,8 @@ function makeBooking()
                     $response = json_decode($response->getBody()->getContents());
 
                     if (isset($response->error)) {
-                        $_SESSION['errors'][] = 'The key is not validated at the server try a different one!';
-                        redirect("room.php?room=" . $_POST["id"]);
+                        $_SESSION['errors'][] = 'Error:The key is not validated at the server try a different one!';
+                        redirect("room.php?room=" . $_POST["id"] . "#errors");
                         exit;
                     } else {
                         if ($response->amount >= $totalCost) {
@@ -280,12 +280,12 @@ function makeBooking()
                                 }
                             } else {
                                 $_SESSION['errors'][] = "Error: The money could not be deposited, try again.";
-                                redirect("room.php?room=" . $_POST["id"]);
+                                redirect("room.php?room=" . $_POST["id"] . "#errors");
                                 exit;
                             }
                         } else {
                             $_SESSION['errors'][] = "Error: Your transfercode doesn't cover the total cost.<br/> Total Cost: $totalCost <br/>Transfercode Amount:$response->amount";
-                            redirect("room.php?room=" . $_POST["id"]);
+                            redirect("room.php?room=" . $_POST["id"] . "#errors");
                             exit;
                         }
                     }
@@ -294,7 +294,7 @@ function makeBooking()
                 }
             } else {
                 $_SESSION['errors'][] = "Error: Transfercode is not correct";
-                redirect("room.php?room=" . $_POST["id"]);
+                redirect("room.php?room=" . $_POST["id"] . "#errors");
                 exit;
             }
         }
@@ -302,7 +302,7 @@ function makeBooking()
         // Handle the case where one or more variables are not set
         // You might want to display an error message or take appropriate action
         $_SESSION['errors'][] = "Error: Missing one or more form fields.";
-        redirect("room.php?room=" . $_POST["id"]);
+        redirect("room.php?room=" . $_POST["id"] . "#errors");
         exit;
     }
 }

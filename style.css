@@ -7,6 +7,7 @@
   --gun-powder: #413f51;
   --coral: #e46464;
   --line_color: #e46464;
+  --coral-hover: #e15353;
 }
 * {
   box-sizing: border-box;
@@ -26,20 +27,18 @@ body {
 .icon-container {
   position: absolute;
   top: 50%;
-  transform: translate(42%, -42%);
+  transform: translate(80%, -52%);
+  color: var(--coral);
 }
-input {
+input[type='text'] {
   padding: 10px 37px;
   width: 100%;
 }
-form {
-  width: 25%;
-}
 
 .header-image {
-  height: 50vh;
+  height: 65vh;
   background-size: cover;
-  background-position: center;
+  background-position: 50% 70%;
   position: relative;
   margin-top: -65px;
 }
@@ -47,24 +46,63 @@ form {
   margin: 0 auto;
   width: 80%;
 }
+.room-info-container {
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
 .room-info {
+  margin-top: -30px;
+  padding: 20px;
+  position: relative;
+  z-index: 5;
+  background: #d1cbcc;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.room-info-head {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
   font-size: 38px;
+  padding-bottom: 20px;
 }
 
 .small-images {
   position: absolute;
-  bottom: 0;
-  right: 10%;
+  right: 15px;
+  display: flex;
+  gap: 7.5px;
+  z-index: 2;
+  top: -64px;
+  width: 40%;
+}
+.small-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56),
+    0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out; /* Add smooth transition for the zoom effect */
+}
+.small-image {
+  height: 75px;
+  width: 50%;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
-.small-images img {
-  height: 100px;
-  width: 100px;
-  object-fit: cover;
-  border: 5px solid green;
+.small-image:hover img {
+  transform: scale(1.2);
+  cursor: pointer;
+  border: 1px solid var(--coral);
+}
+.small-image:hover {
+  border: 2px solid var(--coral);
 }
 
 .nav {
@@ -361,7 +399,7 @@ form {
 .sign-up {
   position: absolute;
   width: 100%;
-  background: var(--coral);
+  background: var(--sand);
   color: var(--pearl);
   top: -40px;
   border-radius: 6px;
@@ -373,7 +411,14 @@ form {
   gap: 15px;
   justify-content: center;
   width: 100%;
-  padding: 15px;
+  padding: 35px 15px 15px 15px;
+}
+.sign-up label {
+  position: absolute;
+  top: 7px;
+  left: 16px;
+  font-weight: 600;
+  color: var(--ocean);
 }
 .sign-up input {
   border: none;
@@ -440,5 +485,150 @@ form {
 }
 
 .button:hover {
-  background: #e15353;
+  background: var(--coral-hover);
+}
+.activities-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 15px 0px;
+  row-gap: 15px;
+}
+.room-activities-card {
+  width: calc(50% - 7.5px);
+  display: flex;
+  justify-content: left;
+  gap: 15px;
+  align-items: center;
+  border-radius: 6px;
+  height: 75px;
+  background: white;
+}
+.room-activities-card:nth-child(odd) {
+  margin-right: 7.5px;
+}
+.room-activities-card:nth-child(even) {
+  margin-left: 7.5px;
+}
+
+/*TODO: change aspect ratio of images to scale them the same*/
+.room-activities-card img {
+  border-radius: 6px 0px 0px 6px;
+  width: 120px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.room-activities-card input {
+  cursor: pointer;
+}
+.form-div {
+  padding: 20px;
+  background: #d1cbcc;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.form-div button {
+  width: 100%;
+  border: none;
+  background: var(--coral);
+  color: var(--pearl);
+  border-radius: 6px;
+  padding: 15px;
+  font-size: 18px;
+}
+.form-div button:hover {
+  background: var(--coral-hover);
+  cursor: pointer;
+}
+.form-title {
+  font-weight: 700;
+  font-size: 38px;
+  margin-bottom: 30px;
+}
+select:focus,
+input:focus {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+
+input[type='checkbox']:checked {
+  border-color: var(--coral);
+  background-color: var(--coral);
+  color: var(--coral);
+}
+
+.form-div label,
+.activities-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.total {
+  margin: 15px 0px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.form-div input[type='text'] {
+  margin: 15px 0px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+}
+.room-page-container {
+  color: var(--gun-powder);
+  padding: 0px 0px 90px 0px;
+}
+
+/*Daterangepicker*/
+.active.start-date.available,
+.active.start-date.available:hover,
+.active.end-date.in-range.available,
+.active.end-date.in-range.available:hover {
+  background-color: var(--coral) !important;
+}
+
+.in-range.available {
+  background-color: #f8ebeb !important;
+}
+.raterangepicker {
+  border: 1px solid var(--coral);
+}
+
+.daterangepicker:before {
+  top: -7px;
+  border-right: 7px solid transparent;
+  border-left: 7px solid transparent;
+  border-bottom: 7px solid var(--coral);
+}
+/**/
+
+.dark-background .footer a {
+  color: var(--pearl);
+}
+.dark-background .footer a:hover {
+  color: var(--coral);
+}
+
+.room-features {
+  color: var(--coral);
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+  padding-bottom: 20px;
+}
+.errors {
+  padding: 20px;
+  position: relative;
+  z-index: 5;
+  background: #b6848d;
+  border-radius: 6px;
+  border: 1px solid #b42a43;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  margin-bottom: 40px;
+  color: var(--pearl);
+  display: flex;
+  flex-direction: column;
 }
