@@ -1,5 +1,6 @@
 const headerImage = document.querySelector('.header-image');
 const imageSquares = document.querySelectorAll('.image-square');
+const total = document.querySelector('.total');
 
 imageSquares.forEach((imageSquare) => {
   imageSquare.addEventListener('click', (event) => {
