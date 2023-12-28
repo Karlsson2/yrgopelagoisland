@@ -1,3 +1,4 @@
+/*Generic CSS*/
 @import url('https://fonts.cdnfonts.com/css/jurassic-park');
 :root {
   --pearl: #dfd9da;
@@ -8,6 +9,8 @@
   --coral: #e46464;
   --line_color: #e46464;
   --coral-hover: #e15353;
+  --swiper-theme-color: #e46464;
+  --swiper-navigation-color: #e46464;
 }
 * {
   box-sizing: border-box;
@@ -21,20 +24,34 @@ body {
   font-family: 'Inter', sans-serif;
   background: var(--pearl);
 }
+.coral-background {
+  background: var(--coral);
+  color: var(--pearl);
+}
+.dark-background {
+  background-color: var(--gun-powder);
+  color: var(--pearl);
+}
+.light-background {
+  background-color: var(--pearl);
+  color: var(--gun-powder);
+}
+.container-title {
+  font-size: 64px;
+  font-weight: 600;
+  padding-bottom: 40px;
+}
+.coral-text {
+  color: var(--coral);
+  font-weight: 600;
+}
 .input-wrapper {
   position: relative;
-}
-.icon-container {
-  position: absolute;
-  top: 50%;
-  transform: translate(80%, -52%);
-  color: var(--coral);
 }
 input[type='text'] {
   padding: 10px 37px;
   width: 100%;
 }
-
 .header-image {
   height: 65vh;
   background-size: cover;
@@ -46,12 +63,13 @@ input[type='text'] {
   margin: 0 auto;
   width: 80%;
 }
+/**/
+/*room page*/
 .room-info-container {
   width: 80%;
   margin: 0 auto;
   padding-bottom: 40px;
 }
-
 .room-info {
   margin-top: -30px;
   padding: 20px;
@@ -62,7 +80,6 @@ input[type='text'] {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-
 .room-info-head {
   display: flex;
   justify-content: space-between;
@@ -70,7 +87,6 @@ input[type='text'] {
   font-size: 38px;
   padding-bottom: 20px;
 }
-
 .small-images {
   position: absolute;
   right: 15px;
@@ -104,7 +120,8 @@ input[type='text'] {
 .small-image:hover {
   border: 2px solid var(--coral);
 }
-
+/**/
+/*nav*/
 .nav {
   display: flex;
   justify-content: space-between;
@@ -133,19 +150,8 @@ input[type='text'] {
   gap: 20px;
   align-items: center;
 }
+/**/
 
-.dark-background {
-  background-color: var(--gun-powder);
-  color: var(--pearl);
-}
-.light-background {
-  background-color: var(--pearl);
-  color: var(--gun-powder);
-}
-.room-image img {
-  width: 100%;
-  height: 200px;
-}
 .index-header-image {
   height: 100vh;
   background-size: cover;
@@ -172,11 +178,6 @@ input[type='text'] {
   margin: -50px auto;
   z-index: 2;
   position: relative;
-}
-.container-title {
-  font-size: 64px;
-  font-weight: 600;
-  padding-bottom: 80px;
 }
 .before {
   background-color: var(--gun-powder);
@@ -220,17 +221,23 @@ input[type='text'] {
 .activities-container {
   padding: 80px 0px 120px 0px;
 }
+
+/*card on index page*/
 .card-container {
   display: flex;
   gap: 10px;
   justify-content: space-evenly;
 }
-
+.room-image img {
+  width: 100%;
+  height: 200px;
+}
 .room-card {
   display: inline-block;
   position: relative;
   width: 100%;
   margin-bottom: 30px;
+  margin-top: 50px;
   border-radius: 6px;
   color: rgba(0, 0, 0, 0.87);
   background: var(--gun-powder);
@@ -238,10 +245,11 @@ input[type='text'] {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-
+.button:hover {
+  background: var(--coral-hover);
+}
 .image-container {
   height: 300px;
-
   overflow: hidden;
   position: relative;
   margin-left: 15px;
@@ -284,7 +292,18 @@ input[type='text'] {
   font-weight: 500;
   font-size: 28px;
 }
-
+.info-more {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+/**/
+/*about us*/
 .about-us-container {
   display: flex;
   gap: 15%;
@@ -295,26 +314,11 @@ input[type='text'] {
   font-weight: 600;
   text-wrap: nowrap;
 }
-.coral-text {
-  color: var(--coral);
-  font-weight: 600;
-}
 .about-us-text {
   font-weight: 100;
   font-size: 20px;
 }
-
-.info-more {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.features {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
+/**/
 
 /*buttons*/
 .button {
@@ -334,6 +338,8 @@ input[type='text'] {
   width: 100%;
   height: 100%;
 }
+/**/
+/*activities on index page*/
 .activities-text {
   width: 50%;
 }
@@ -378,11 +384,8 @@ input[type='text'] {
 .activities-button:hover {
   transform: scale(1.1);
 }
-.coral-background {
-  background: var(--coral);
-  color: var(--pearl);
-}
-
+/**/
+/*footer*/
 .footer {
   width: 80%;
   margin: 0 auto;
@@ -396,6 +399,51 @@ input[type='text'] {
   padding-top: 40px;
   border-top: var(--sand) solid 1px;
 }
+.dark-background .footer a {
+  color: var(--pearl);
+}
+.dark-background .footer a:hover {
+  color: var(--coral);
+}
+.footer-title {
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.footer-links,
+.social {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.social a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer a {
+  text-decoration: none;
+  color: var(--gun-powder);
+}
+
+.footer a:hover {
+  color: var(--coral);
+}
+.contact-us {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.copyright {
+  text-align: center;
+  font-size: 14px;
+  width: 80%;
+  border-top: var(--sand) solid 1px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/**/
+/*sign-up form on footer*/
 .sign-up {
   position: absolute;
   width: 100%;
@@ -446,46 +494,76 @@ input[type='text'] {
   cursor: pointer;
   background-color: #2a3743;
 }
-.footer-title {
-  margin-bottom: 15px;
-  font-weight: 700;
-}
-.footer-links,
-.social {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+/**/
 
-.social a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.footer a {
-  text-decoration: none;
-  color: var(--gun-powder);
-}
-
-.footer a:hover {
+/*form on room page*/
+.icon-container {
+  position: absolute;
+  top: 50%;
+  transform: translate(80%, -52%);
   color: var(--coral);
 }
-.contact-us {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.copyright {
-  text-align: center;
-  font-size: 14px;
-  width: 80%;
-  border-top: var(--sand) solid 1px;
-  margin: 0 auto;
+.form-div {
   padding: 20px;
+  background: #d1cbcc;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-
-.button:hover {
+.form-div button {
+  width: 100%;
+  border: none;
+  background: var(--coral);
+  color: var(--pearl);
+  border-radius: 6px;
+  padding: 15px;
+  font-size: 18px;
+}
+.form-div button:hover {
   background: var(--coral-hover);
+  cursor: pointer;
+}
+.form-title {
+  font-weight: 700;
+  font-size: 38px;
+  margin-bottom: 30px;
+}
+select:focus,
+input:focus {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+input[type='checkbox']:checked {
+  border-color: var(--coral);
+  background-color: var(--coral);
+  color: var(--coral);
+}
+.form-div label,
+.activities-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.total {
+  margin: 15px 0px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.form-div input[type='text'] {
+  margin: 15px 0px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+}
+.room-page-container {
+  color: var(--gun-powder);
+  padding: 0px 0px 90px 0px;
+}
+.room-features {
+  color: var(--coral);
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+  padding-bottom: 20px;
 }
 .activities-card-container {
   display: flex;
@@ -510,8 +588,6 @@ input[type='text'] {
 .room-activities-card:nth-child(even) {
   margin-left: 7.5px;
 }
-
-/*TODO: change aspect ratio of images to scale them the same*/
 .room-activities-card img {
   border-radius: 6px 0px 0px 6px;
   width: 120px;
@@ -522,65 +598,7 @@ input[type='text'] {
 .room-activities-card input {
   cursor: pointer;
 }
-.form-div {
-  padding: 20px;
-  background: #d1cbcc;
-  border-radius: 6px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
-}
-
-.form-div button {
-  width: 100%;
-  border: none;
-  background: var(--coral);
-  color: var(--pearl);
-  border-radius: 6px;
-  padding: 15px;
-  font-size: 18px;
-}
-.form-div button:hover {
-  background: var(--coral-hover);
-  cursor: pointer;
-}
-.form-title {
-  font-weight: 700;
-  font-size: 38px;
-  margin-bottom: 30px;
-}
-select:focus,
-input:focus {
-  outline: 2px solid var(--coral);
-  outline-offset: 2px;
-}
-
-input[type='checkbox']:checked {
-  border-color: var(--coral);
-  background-color: var(--coral);
-  color: var(--coral);
-}
-
-.form-div label,
-.activities-title {
-  font-size: 18px;
-  font-weight: 600;
-}
-.total {
-  margin: 15px 0px;
-  font-size: 18px;
-  font-weight: 600;
-}
-.form-div input[type='text'] {
-  margin: 15px 0px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-}
-.room-page-container {
-  color: var(--gun-powder);
-  padding: 0px 0px 90px 0px;
-}
-
+/**/
 /*Daterangepicker*/
 .active.start-date.available,
 .active.start-date.available:hover,
@@ -604,20 +622,6 @@ input[type='checkbox']:checked {
 }
 /**/
 
-.dark-background .footer a {
-  color: var(--pearl);
-}
-.dark-background .footer a:hover {
-  color: var(--coral);
-}
-
-.room-features {
-  color: var(--coral);
-  display: flex;
-  gap: 15px;
-  justify-content: flex-start;
-  padding-bottom: 20px;
-}
 .errors {
   padding: 20px;
   position: relative;
@@ -674,4 +678,79 @@ input[type='checkbox']:checked {
   font-size: 38px;
   margin-bottom: 15px;
   color: var(--gun-powder);
+}
+/**/
+
+@media (max-width: 768px) {
+  .about-us-container {
+    flex-direction: column;
+  }
+  .content-container-activities {
+    flex-direction: column;
+  }
+  .activities-text {
+    width: 100%;
+  }
+  .activities-images {
+    width: 100%;
+  }
+  /*footer*/
+  .sign-up form {
+    flex-direction: column;
+  }
+  .sign-up button {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+  .sign-up input {
+    font-size: 14px;
+  }
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  .social a {
+    gap: 15px;
+    justify-content: center;
+  }
+  .room-card {
+    margin-top: 50px;
+  }
+  .container-title,
+  .about-us {
+    padding-bottom: 40px;
+  }
+  /*room page*/
+  .room-activities-card {
+    width: 100%;
+    margin: 0px !important;
+  }
+  .room-activities-card img {
+    width: calc(100% / 3);
+  }
+  .room-info-head,
+  .form-title,
+  .activities-title {
+    font-size: 24px;
+  }
+  .room-features {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .small-images {
+    width: 55%;
+  }
+  .options {
+    display: none;
+  }
+  .feature-description {
+    font-size: 14px;
+    padding: 5px 5px 5px 0px;
+  }
+  .form-div input[type='text'] {
+    padding: 10px 10px 10px 37px;
+    font-size: 14px;
+  }
 }

@@ -100,17 +100,12 @@ if (isset($_GET["room"])) {
 </div>
 
 <?php require __DIR__ . "/dark-footer.php"; ?>
-
+<script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
 
 <script>
-    const bookingForm = document.querySelector('.booking-form');
-    const dates = document.querySelector('input[name="datefilter"');
-    const roomPrice = document.getElementById('pricePerNight');
-    const totalValue = document.querySelector('.total');
     <?php
     // Your PHP code to generate the disabledDates array
     $disabledDates = loadMadeBookings((int)$room["id"]);
@@ -170,70 +165,8 @@ if (isset($_GET["room"])) {
             }
         );
     });
-    bookingForm.addEventListener('change', function() {
-        const totalPrice = getTotalPrice();
-        totalValue.textContent = 'Total Price: $' + totalPrice;
-    });
-    $('input[name="datefilter"]').on('change', function() {
-        const totalPrice = getTotalPrice();
-        totalValue.textContent = 'Total Price: $' + totalPrice;
-    });
-
-    function getTotalPrice() {
-        const roomPrice = getRoomTotalPrice();
-        const activitiesPrices = getActivitiesPrice();
-        return roomPrice + activitiesPrices;
-    }
-
-
-    function getActivitiesPrice() {
-        const selectedCheckboxes = document.querySelectorAll('input[name="selected_features[]"]:checked');
-        const selectedPrices = Array.from(selectedCheckboxes).map(function(checkbox) {
-            return parseFloat(checkbox.getAttribute('data-price'));
-        });
-        if (selectedCheckboxes.length < 1) {
-            return 0;
-        }
-        // Calculate the total price by summing up the selected prices
-        else {
-            const totalPrice = selectedPrices.reduce(function(total, price) {
-                return total + price;
-            });
-            return totalPrice;
-        }
-
-    }
-
-    function getRoomTotalPrice() {
-        console.log(dates.value);
-
-        if (dates.value == null || dates.value == "") {
-            return 0;
-        } else {
-            const dateArray = dates.value.split(" - ");
-            const days = calculateDays(dateArray[0], dateArray[1]);
-            const totalRoomPrice = days * roomPrice.value;
-            return totalRoomPrice;
-        }
-
-
-    }
-
-    function calculateDays(startDate, endDate) {
-        date1 = new Date(parseEuropeanDate(startDate));
-        date2 = new Date(parseEuropeanDate(endDate));
-        const time_difference = date2.getTime() - date1.getTime();
-        const days_difference = time_difference / (1000 * 60 * 60 * 24)
-        return days_difference + 1;
-    }
-
-
-    function parseEuropeanDate(dateString) {
-        const [day, month, year] = dateString.split('/');
-        // Note: Months in JavaScript are 0-indexed, so we subtract 1 from the month
-        return new Date(year, month - 1, day);
-    }
 </script>
+<script type="text/javascript" src="room-script.js"></script>
 </body>
 
 </html>

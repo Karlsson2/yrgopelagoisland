@@ -23,17 +23,14 @@ $features = getallFeatures();
         </div>
     </div>
 </div>
-<div class="container light-background" id="rooms">
+<!-- <div class="container light-background" id="rooms">
     <div class="room-container">
         <div class="container-title">Our Rooms</div>
         <div class="card-container">
             <?php foreach ($rooms as $room) : ?>
-                <div class="room-card">
+                <div class="room-card ">
                     <div class="image-container">
-                        <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;
-    background-size: cover;
-"> </div>
-
+                        <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;background-size: cover;"> </div>
                     </div>
                     <div class="card-room-info">
                         <div class="info-head">
@@ -73,7 +70,67 @@ $features = getallFeatures();
             <?php endforeach; ?>
         </div>
     </div>
+</div> -->
+
+<div class="container light-background">
+    <!-- Slider main container -->
+    <div class="room-container">
+        <div class="container-title">Our Rooms</div>
+
+        <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <?php foreach ($rooms as $room) : ?>
+                    <div class="room-card swiper-slide">
+                        <div class="image-container">
+                            <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;background-size: cover;"> </div>
+                        </div>
+                        <div class="card-room-info">
+                            <div class="info-head">
+                                <div class="room-title"><?= $room["category"] ?></div>
+                                <div class="price">$<?= $room["price_per_night"] ?>/night</div>
+                            </div>
+                            <div class="info-more">
+                                <div class="features">
+                                    <div class="beds"><i class="fa-solid fa-bed"></i> Sleeps <?= $room["sleeps"] ?></div>
+                                    <div class="view">
+                                        <?php if ($room["view"] == "Jungle") : ?>
+                                            <i class="fa-solid fa-tree"></i> Jungle View
+                                        <?php else : ?>
+                                            <i class="fa-solid fa-umbrella-beach"></i> Beach View
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="aircon">
+                                        <?php if ($room["aircon"]) : ?>
+                                            <i class="fa-regular fa-snowflake"></i> Aircon
+                                        <?php else : ?>
+                                            <i class="fa-regular fa-snowflake"></i> No Aircon
+                                        <?php endif; ?>
+
+                                    </div>
+                                </div>
+                                <div class="button-div">
+                                    <a href="/room.php?room=<?= $room["id"] ?>" class="button">
+                                        <span class="button-text">Book now </span><i class="fa-solid fa-arrow-right"></i>
+
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
 </div>
+
+
+
 <div class="dark-background">
     <div class="container">
         <div class="activities-container">
@@ -98,11 +155,13 @@ $features = getallFeatures();
 </div>
 
 <?php require __DIR__ . "/light-footer.php"; ?>
-
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="index-script.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
+
+
 </body>
 
 </html>
