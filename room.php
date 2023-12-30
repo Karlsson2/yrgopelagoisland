@@ -14,6 +14,7 @@ if (isset($_GET["room"])) {
 ?>
 
 <div class="header-image" style="background-image: url('<?= $room["image1"] ?>');">
+    <div class="before"></div>
 </div>
 
 <div class="light-background">

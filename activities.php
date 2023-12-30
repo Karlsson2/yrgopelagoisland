@@ -7,6 +7,7 @@ $features = getAllFeatures();
 $randomFeature = $features[$random];
 ?>
 <div class="header-image activities" style="background-image: url('<?= $randomFeature["image"] ?>');">
+    <div class="before"></div>
 </div>
 <div class="container activities-container">
     <div class="activities-title">Activities</div>
