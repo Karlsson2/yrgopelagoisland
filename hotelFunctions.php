@@ -11,8 +11,6 @@ $dotenv->load();
 
 session_start();
 
-
-
 /* 
 Here's something to start your career as a hotel manager.
 

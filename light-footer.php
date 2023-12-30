@@ -12,9 +12,8 @@
             <div class="logo">Jurassic Hotel</div>
             <div class="footer-links">
                 <div class="footer-title">Links</div>
-                <a href="#">Rooms</a>
-                <a href="#">Activities</a>
-                <a href="#">Login</a>
+                <a href="index.php#rooms">Rooms</a>
+                <a href="/activities.php">Activities</a>
             </div>
             <div class="contact-us">
                 <div class="footer-title">Contact us</div>
