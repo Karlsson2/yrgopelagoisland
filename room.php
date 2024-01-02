@@ -4,13 +4,13 @@ require 'vendor/autoload.php';
 require __DIR__ . "/header.php";
 require __DIR__ . "/hotelFunctions.php";
 
-$features = getAllFeatures();
 
 if (isset($_GET["room"])) {
     //if the ID has been set, get the room from the database. then generate the room content on the page.
     $room = getOneRoom($_GET["room"]);
 }
-
+$discounts = getDiscounts((int) $room["id"]);
+$features = getAllFeatures();
 ?>
 
 <div class="header-image" style="background-image: url('<?= $room["image1"] ?>');">
@@ -20,14 +20,6 @@ if (isset($_GET["room"])) {
 <div class="light-background">
     <div class="room-info-container">
         <div class="room-info">
-            <div class="small-images">
-                <div class="small-image">
-                    <img src="<?= $room["image2"] ?>" class="image-square" alt="">
-                </div>
-                <div class="small-image">
-                    <img src="<?= $room["image3"] ?>" class="image-square" alt="">
-                </div>
-            </div>
             <div class="room-info-head">
                 <div class="room-name"><?= $room["category"] ?></div>
                 <div class="room-cost">$<?= $room["price_per_night"] ?>/night</div>
@@ -57,6 +49,17 @@ if (isset($_GET["room"])) {
     </div>
 </div>
 <div class="container room-page-container">
+
+
+    <?php if (!empty($discounts)) : ?>
+        <div class="discounts discount-container">
+            <?php foreach ($discounts as $discount) : ?>
+                <div class="discount ">
+                    <div class="discount-description" data-percentage="<?= $discount["discount_percentage"] ?>" data-days="<?= $discount["days_required"] ?>"><?= $discount["description"] ?></div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     <?php
     // Check if there are any errors
     if (!empty($_SESSION['errors'])) {
@@ -68,6 +71,7 @@ if (isset($_GET["room"])) {
         echo "</div>";
     }
     ?>
+
     <div class="form-div">
         <div class="form-title">Book a Stay</div>
         <form action="hotelFunctions.php" method="POST" class="booking-form">
@@ -92,6 +96,8 @@ if (isset($_GET["room"])) {
                     </div>
                 <?php endforeach; ?>
             </div>
+            <div class="subtotal">Subtotal: $0</div>
+            <div class="discountTotal"></div>
             <div class="total">Total Price: $0</div>
             <input type="hidden" name="id" value="<?= $room["id"] ?>">
             <input type="hidden" name="pricePerNight" id="pricePerNight" value="<?= $room["price_per_night"] ?>">
@@ -101,7 +107,6 @@ if (isset($_GET["room"])) {
 </div>
 
 <?php require __DIR__ . "/dark-footer.php"; ?>
-<script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -110,8 +115,26 @@ if (isset($_GET["room"])) {
     <?php
     // Your PHP code to generate the disabledDates array
     $disabledDates = loadMadeBookings((int)$room["id"]);
-    echo "var disabledDates = " . $disabledDates . ";";
+    $roomImages = [];
+    $roomImages[] = $room["image1"];
+    $roomImages[] = $room["image2"];
+    echo "const disabledDates1 = " . json_encode($disabledDates) . ";";
+    echo "const roomImages1 =" . json_encode($roomImages) . ";";
     ?>
+    const disabledDates = JSON.parse(JSON.stringify(disabledDates1));
+    const roomImages = JSON.parse(JSON.stringify(roomImages1));
+    const backgroundContainer = document.querySelector('.header-image');
+    let index = 0;
+
+    setInterval(function() {
+        // Update background image
+        backgroundContainer.style.backgroundImage = `url(${roomImages[index]})`;
+
+        // Increment the index or reset to 0 if it reaches the end
+        index = (index + 1) % roomImages.length;
+    }, 3000); // Change background every 5 seconds (adjust as needed)
+
+
     $(function() {
         $('#datefilter').daterangepicker({
                 minDate: '01/01/2024',

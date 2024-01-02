@@ -409,6 +409,18 @@ function getBookings(int $roomId)
     return $bookings;
 }
 
+function getDiscounts(int $roomId)
+{
+    $dbName = "hotel.db";
+    $db = connect($dbName);
+    $query = "SELECT * FROM discounts WHERE room_id=:roomId";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+    $stmt->execute();
+    $discounts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $discounts;
+}
+
 function loadMadeBookings(int $roomId)
 {
     // Generate an array of disabled individual dates
