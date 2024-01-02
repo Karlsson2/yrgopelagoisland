@@ -23,7 +23,14 @@ $features = getallFeatures();
         </div>
     </div>
 </div>
-
+<div class="coral-background">
+    <div class="container index-discount-container">
+        <div class="discount-icon">
+            <div class="discount-icon-text">%</div>
+        </div>
+        <div class="index-discounts">Multi-day booking discounts available for all rooms.</div>
+    </div>
+</div>
 <div class="container light-background" id="rooms">
     <!-- Slider main container -->
     <div class=" room-container">
@@ -36,7 +43,8 @@ $features = getallFeatures();
                 <?php foreach ($rooms as $room) : ?>
                     <div class="room-card swiper-slide">
                         <div class="image-container">
-                            <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;background-size: cover;"> </div>
+                            <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;background-size: cover;">
+                            </div>
                         </div>
                         <div class="card-room-info">
                             <div class="info-head">

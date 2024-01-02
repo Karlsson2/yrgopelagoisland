@@ -389,6 +389,42 @@ input[type='text'] {
   flex-direction: column;
   gap: 7px;
 }
+.index-discount-container {
+  text-align: center;
+  font-size: 28px;
+  padding: 24px 0px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: relative;
+}
+.discount-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pearl);
+  color: var(--gun-powder);
+  border: 2px dashed var(--gun-powder);
+  padding: 10px;
+  animation: spin 10s infinite linear;
+  position: absolute;
+  left: 0px;
+}
+.discount-icon-text {
+  animation: spin 10s infinite reverse linear;
+  width: 100%;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
 /**/
 /*about us*/
 .about-us-container {
@@ -785,6 +821,12 @@ input[type='checkbox']:checked {
   }
   .activities-images {
     width: 100%;
+  }
+
+  .discount-icon {
+    width: 50px;
+    height: 50px;
+    top: -25px;
   }
   /*footer*/
   .sign-up form {
