@@ -222,6 +222,7 @@ function makeBooking()
         $selectedFeatures = [];
         $totalDates = totalDates($startDate, $endDate);
         $totalFeatureCost = 0;
+        $discount = 0;
 
         if (isset($_POST['selected_features'])) {
             // Loop through the selected checkboxes
@@ -232,10 +233,14 @@ function makeBooking()
                 $totalFeatureCost = $totalFeatureCost + $feature["price"];
             }
         }
-        //TODO: add featurecost to the total cost
-        $totalCost = ($pricePerNight * $totalDates) + $totalFeatureCost;
 
+        $possibleDiscount = getMaxApplicableDaysDiscount($roomId, $totalDates);
+        if (!empty($possibleDiscount)) {
+            $discount = $possibleDiscount["discount_percentage"];
+        }
 
+        $beforeDiscount = (($pricePerNight * $totalDates) + $totalFeatureCost);
+        $totalCost = $beforeDiscount - ($beforeDiscount * $discount);
 
         if (isBookingOverlapping($startDate, $endDate, $roomId)) {
             $_SESSION['errors'][] = 'Error: The booking overlaps another booking or is outside the allowed booking scope!';
@@ -464,4 +469,17 @@ function isBookingOverlapping(string $arrivalDate, string $departureDate, string
     $result = $query->fetch(PDO::FETCH_ASSOC);
 
     return $result['count_overlap'] > 0;
+}
+
+function getMaxApplicableDaysDiscount($roomId, $daysBooked)
+{
+    $dbName = "hotel.db";
+    $db = connect($dbName);
+    // Retrieve the discount with the maximum applicable days_required for the specified room
+
+    $query = $db->prepare("SELECT discount_percentage, days_required FROM discounts WHERE room_id = :roomId AND days_required <= :daysBooked ORDER BY days_required DESC LIMIT 1");
+    $query->bindParam(':roomId', $roomId, PDO::PARAM_INT);
+    $query->bindParam(':daysBooked', $daysBooked, PDO::PARAM_INT);
+    $query->execute();
+    return $query->fetch(PDO::FETCH_ASSOC);
 }
