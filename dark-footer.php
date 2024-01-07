@@ -1,13 +1,5 @@
 <div class="dark-background">
     <div class="footer">
-        <div class="sign-up">
-            <form action="#">
-                <label for="email">Newsletter Signup</label>
-                <input type="text" name="email" placeholder="example@email.com">
-                <button type="submit">Submit <i class="fa-solid fa-arrow-right"></i></button>
-            </form>
-        </div>
-
         <div class="footer-container">
             <div class="logo">Jurassic Hotel</div>
             <div class="footer-links">
@@ -21,7 +13,6 @@
                 <div class="phone"><i class="fa-solid fa-phone"></i> +999 999 999 1</div>
                 <div class="email"><i class="fa-solid fa-envelope"></i> <a href="mailto:info@jurassichotel.com">info@jurassichotel.com</a></div>
             </div>
-
             <div class="social">
                 <div class="footer-title">Social</div>
                 <a href="#"><i class="fa-brands fa-square-instagram"></i> #JurassicHotel</a>

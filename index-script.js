@@ -21,3 +21,7 @@ const swiper = new Swiper('.swiper', {
     prevEl: '.swiper-button-prev',
   },
 });
+
+document.getElementById('redirectInput').value = window.location.pathname;
+
+console.log(window.location.pathname);

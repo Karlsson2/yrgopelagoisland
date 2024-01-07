@@ -48,7 +48,8 @@ body {
 .input-wrapper {
   position: relative;
 }
-input[type='text'] {
+input[type='text'],
+input[type='email'] {
   padding: 10px 37px;
   width: 100%;
 }
@@ -490,10 +491,8 @@ input[type='text'] {
 }
 
 .activities-button {
-  position: absolute;
+  margin-top: 15px;
   width: 100%;
-  right: 10%;
-  bottom: 48px;
   background: var(--coral);
   display: flex;
   padding: 10px 30px;
@@ -505,7 +504,7 @@ input[type='text'] {
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 .activities-button:hover {
-  transform: scale(1.1);
+  background-color: var(--coral-hover);
 }
 /**/
 /*footer*/
@@ -744,20 +743,40 @@ input[type='checkbox']:checked {
   border-bottom: 7px solid var(--coral);
 }
 /**/
-
+.message-container {
+  padding: 20px 0px;
+}
+.successes {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.success {
+  background: #84b68e;
+  border: 1px solid #2ab44a;
+  color: var(--pearl);
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
 .errors {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+.error {
   padding: 20px;
   position: relative;
   z-index: 5;
-  background: #b6848d;
+  background: #9e3333;
   border-radius: 6px;
   border: 1px solid #b42a43;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  margin-bottom: 40px;
+
   color: var(--pearl);
-  display: flex;
-  flex-direction: column;
 }
 /*activities*/
 
@@ -951,5 +970,15 @@ input[type='checkbox']:checked {
   }
   .header-image.activities {
     background-position: 20% 70%;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1150px) {
+  .about-us-container {
+    flex-direction: column;
+  }
+  .discount-icon {
+    width: 50px;
+    height: 50px;
+    top: -25px;
   }
 }

@@ -23,8 +23,25 @@ and one function to control if a guid is valid.
 */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Form was submitted, process the data
-    makebooking();
+    // Form was submitted, check which form it was,
+    if (isset($_POST["signupForm"])) {
+        $_SESSION['signupMessage'] = [];
+        $email = trim(htmlspecialchars($_POST["email"]));
+        $redirect = $_POST["redirect"];
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            insertSignup($email);
+        } else {
+            $_SESSION['signupMessage']['error'] = "Error: Not a valid email address";
+        }
+        redirect($redirect . "#sign-up");
+    }
+
+    if (isset($_POST["reviewForm"])) {
+        // TODO:createReview();
+    }
+    if (isset($_POST["bookingForm"])) {
+        makebooking();
+    }
 }
 
 
@@ -85,59 +102,49 @@ function isValidUuid(string $uuid): bool
     return true;
 }
 
+function isValidEmail($email)
+{
+    // Remove illegal characters from email
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+    // Validate email address
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true; // Valid email
+    } else {
+        return false; // Invalid email
+    }
+}
+
 
 function getOneRoom(int $roomId): array
 {
-    // Connect to the database using the connect function
+    //return one specific room from the db
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-
-    // Prepare the SQL statement
     $query = $db->prepare('SELECT * FROM rooms WHERE id = :roomId');
-
-    // Bind the parameter
     $query->bindParam(':roomId', $roomId, PDO::PARAM_INT);
-
-    // Execute the query
     $query->execute();
-
-    // Fetch the result as an associative array
     $room = $query->fetch(PDO::FETCH_ASSOC);
     return $room;
 }
 
 function getAllRooms(): array
 {
-    // Connect to the database using the connect function
+    // return all the rooms
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-
-    // Prepare the SQL statement
     $query = $db->prepare('SELECT * FROM rooms');
-
-    // Execute the query
     $query->execute();
-
-    // Fetch the result as an associative array
     $rooms = $query->fetchAll(PDO::FETCH_ASSOC);
     return $rooms;
 }
 function getAllFeatures(): array
 {
-    // Connect to the database using the connect function
+    //get all the features.
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-
-    // Prepare the SQL statement
     $query = $db->prepare('SELECT * FROM features');
-
-    // Execute the query
     $query->execute();
-
-    // Fetch the result as an associative array
     $features = $query->fetchAll(PDO::FETCH_ASSOC);
     return $features;
 }
@@ -147,26 +154,17 @@ function insertBooking(string $startDate, string $endDate, array $selectedFeatur
     $dbName = "hotel.db";
     $db = connect($dbName);
     try {
-        // Prepare the SQL statement
         $query = $db->prepare("INSERT INTO booking (arrival_date, departure_date, transfercode, total_cost, room_id)
         VALUES (:startDate, :endDate, :transfercode, :total_cost, :room_id)");
-
-        // Bind the parameter
         $query->bindParam(':startDate', $startDate);
         $query->bindParam(':endDate', $endDate);
         $query->bindParam(':transfercode', $transfercode);
         $query->bindParam(':room_id', $roomId);
         $query->bindParam(':total_cost', $totalCost);
-
-        // Execute the query
         $query->execute();
-
         $bookingId = $db->lastInsertId();
-
-
         //if the selectedfeature array is not empty, iterate over the features and insert them in the booking_features table
         if (!empty($selectedFeatures)) {
-
             foreach ($selectedFeatures as $feature) {
                 $query = $db->prepare("INSERT INTO booking_features (booking_id, feature_id)
                 VALUES (:bookingId, :featureId)");
@@ -181,20 +179,16 @@ function insertBooking(string $startDate, string $endDate, array $selectedFeatur
         }
         return $bookingId;
     } catch (PDOException $e) {
-        // Handle exceptions (e.g., log the error or show a user-friendly message)
-        echo "Error: " . $e->getMessage();
-    } finally {
-        // Close the database connection
-        $db = null;
+        $_SESSION['errors'][] = 'Error: Could not insert into DB.' . $e;
     }
 }
 
 
 function totalDates(string $startDate, string $endDate): int
 {
+    //return the total amount of dates booked.
     $startDate = new DateTime($startDate);
     $endDate = new DateTime($endDate);
-
     $interval = $startDate->diff($endDate);
     $totalDays = $interval->days;
     return $totalDays + 1;
@@ -210,7 +204,7 @@ function makeBooking()
         isset($_POST["pricePerNight"]) &&
         isset($_POST["id"])
     ) {
-        // Use htmlspecialchars to sanitize user input
+        // Use htmlspecialchars to sanitize user input and collect all the form data for processing
 
         $dates = trim(htmlspecialchars($_POST["datefilter"]));
         $transferCode = htmlspecialchars($_POST["transfercode"]);
@@ -302,8 +296,6 @@ function makeBooking()
             }
         }
     } else {
-        // Handle the case where one or more variables are not set
-        // You might want to display an error message or take appropriate action
         $_SESSION['errors'][] = "Error: Missing one or more form fields.";
         redirect("room.php?room=" . $_POST["id"] . "#errors");
         exit;
@@ -313,7 +305,7 @@ function makeBooking()
 
 function bookingResponse(int $bookingId)
 {
-    //do some shit with the data 
+    //JSON Response when a booking is made.
     $booking = getBooking($bookingId);
     $features = getAllFeaturesWithBooking($bookingId);
     $room = getOneRoom((int) $booking["room_id"]);
@@ -339,71 +331,47 @@ function bookingResponse(int $bookingId)
 
 function getBooking(int $bookingId)
 {
-    // Connect to the database using the connect function
+    //return the booking with a particular id
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-
-    // Prepare the SQL statement
     $query = $db->prepare('SELECT * FROM booking WHERE id = :bookingId');
-
-    // Bind the parameter
     $query->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
-
-    // Execute the query
     $query->execute();
-
-    // Fetch the result as an associative array
     $booking = $query->fetch(PDO::FETCH_ASSOC);
     return $booking;
 }
 function getAllFeaturesWithBooking(int $bookingId)
 {
+    //function to get all the features for a particular booking
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-
-    // Prepare the SQL statement
     $query = $db->prepare("SELECT features.name, features.price
     FROM booking_features 
     INNER JOIN features ON booking_features.feature_id = features.id
     WHERE booking_features.booking_id = :bookingId");
-
-    // Bind the parameter
     $query->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
-
-    // Execute the query
     $query->execute();
-
-    // Fetch the result as an associative array
     $features = $query->fetchAll(PDO::FETCH_ASSOC);
     return $features;
 }
 
 function getFeature(int $featureId)
 {
+    // Function to get all the feature activities
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-
-    // Prepare the SQL statement
     $query = $db->prepare("SELECT name, price
     FROM features
     WHERE id = :featureId");
-
-    // Bind the parameter
     $query->bindParam(':featureId', $featureId, PDO::PARAM_INT);
-
-    // Execute the query
     $query->execute();
-
-    // Fetch the result as an associative array
     $feature = $query->fetch(PDO::FETCH_ASSOC);
     return $feature;
 }
 
 function getBookings(int $roomId)
 {
+    //function to get all the bookings
     $dbName = "hotel.db";
     $db = connect($dbName);
     $query = "SELECT arrival_date, departure_date FROM booking WHERE room_id=:roomId";
@@ -416,6 +384,7 @@ function getBookings(int $roomId)
 
 function getDiscounts(int $roomId)
 {
+    //Function to get all the discount for a particular room
     $dbName = "hotel.db";
     $db = connect($dbName);
     $query = "SELECT * FROM discounts WHERE room_id=:roomId";
@@ -428,6 +397,7 @@ function getDiscounts(int $roomId)
 
 function loadMadeBookings(int $roomId)
 {
+    // Function to get all the bookings.
     // Generate an array of disabled individual dates
     $bookings = getBookings($roomId);
     $disabledDates = [];
@@ -448,13 +418,12 @@ function loadMadeBookings(int $roomId)
 
 function isBookingOverlapping(string $arrivalDate, string $departureDate, string $roomId): bool
 {
+    //function to check if the booking is overlapping any current bookings.
     if ($arrivalDate < '01-01-2024' || $departureDate > '31-01-2024') {
         return true; // Booking is outside the allowed date range of january 2024
     }
     $dbName = "hotel.db";
     $db = connect($dbName);
-
-    // Prepare the SQL statement
     $query = $db->prepare("SELECT COUNT(*) AS count_overlap
               FROM booking
               WHERE room_id = :room_id
@@ -476,10 +445,22 @@ function getMaxApplicableDaysDiscount($roomId, $daysBooked)
     $dbName = "hotel.db";
     $db = connect($dbName);
     // Retrieve the discount with the maximum applicable days_required for the specified room
-
     $query = $db->prepare("SELECT discount_percentage, days_required FROM discounts WHERE room_id = :roomId AND days_required <= :daysBooked ORDER BY days_required DESC LIMIT 1");
     $query->bindParam(':roomId', $roomId, PDO::PARAM_INT);
     $query->bindParam(':daysBooked', $daysBooked, PDO::PARAM_INT);
     $query->execute();
     return $query->fetch(PDO::FETCH_ASSOC);
+}
+function insertSignup($email)
+{
+    $dbName = "hotel.db";
+    try {
+        $db = connect($dbName);
+        $query = $db->prepare("INSERT INTO signups (email) VALUES (:email)");
+        $query->bindParam(':email', $email);
+        $query->execute();
+        $_SESSION['signupMessage']['success'][] = "Signup successful!";
+    } catch (PDOException $e) {
+        $_SESSION['signupMessage']['error'][] = "Error: Failed to insert signup - " . $e->getMessage();
+    }
 }

@@ -1,13 +1,16 @@
 <div class="light-background">
     <div class="footer">
-        <div class="sign-up">
-            <form action="#">
+        <div class="sign-up" id="sign-up">
+            <form action="/hotelFunctions.php" method="POST">
+                <input type="hidden" name="signupForm" value="1">
+                <input type="hidden" id="redirectInput" name="redirect" value="">
+
                 <label for="email">Newsletter Signup</label>
-                <input type="text" name="email" placeholder="example@email.com">
+                <input type="email" name="email" placeholder="example@email.com">
                 <button type="submit">Submit <i class="fa-solid fa-arrow-right"></i></button>
             </form>
         </div>
-
+        <?php require __DIR__ . "/errors.php"; ?>
         <div class="footer-container">
             <div class="logo">Jurassic Hotel</div>
             <div class="footer-links">
