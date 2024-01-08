@@ -254,7 +254,7 @@ function makeBooking()
                     $response = json_decode($response->getBody()->getContents());
 
                     if (isset($response->error)) {
-                        $_SESSION['errors'][] = 'Error:The key is not validated at the server try a different one!';
+                        $_SESSION['errors'][] = 'Error:The key is not validated at the server, either your code is invalid or you havent withdrawn enough!';
                         redirect("room.php?room=" . $_POST["id"] . "#errors");
                         exit;
                     } else {
