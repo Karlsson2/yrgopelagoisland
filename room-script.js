@@ -146,30 +146,19 @@ if (bookingForm !== null) {
     const totalPrice = getTotalPrice();
     const discounts = checkForDiscounts();
 
-    if (discounts > 0) {
-      const discountedPrice = totalPrice - totalPrice * discounts;
-      const discountTotalPrice = (totalPrice * discounts).toPrecision(3);
-      totalValue.textContent = 'Total: $' + discountedPrice.toPrecision(3);
-      subTotal.textContent = 'Subtotal: $' + totalPrice.toPrecision(3);
-      discountTotal.textContent =
-        'Discount: -$' +
-        discountTotalPrice +
-        '(' +
-        Math.floor(discounts * 100) +
-        '%)';
-    } else {
-      subTotal.textContent = 'Subtotal: $' + totalPrice.toPrecision(3);
-      totalValue.textContent = 'Total: $' + totalPrice.toPrecision(3);
-    }
+    calculateDiscount(totalPrice, discounts);
   });
 }
 $('input[name="datefilter"]').on('change', function () {
   const totalPrice = getTotalPrice();
   const discounts = checkForDiscounts();
+  calculateDiscount(totalPrice, discounts);
+});
 
+function calculateDiscount(totalPrice, discounts) {
   if (discounts > 0) {
     const discountedPrice = totalPrice - totalPrice * discounts;
-    const discountTotalPrice = (totalPrice * discounts).toPrecision(3);
+    const discountTotalPrice = (totalPrice * discounts).toPrecision(2);
     totalValue.textContent = 'Total: $' + discountedPrice.toPrecision(3);
     subTotal.textContent = 'Subtotal: $' + totalPrice.toPrecision(3);
     discountTotal.textContent =
@@ -180,6 +169,7 @@ $('input[name="datefilter"]').on('change', function () {
       '%)';
   } else {
     subTotal.textContent = 'Subtotal: $' + totalPrice.toPrecision(3);
+    discountTotal.textContent = '';
     totalValue.textContent = 'Total: $' + totalPrice.toPrecision(3);
   }
-});
+}
