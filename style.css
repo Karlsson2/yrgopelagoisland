@@ -982,3 +982,135 @@ input[type='checkbox']:checked {
     top: -25px;
   }
 }
+pre {
+  position: relative;
+}
+#copyButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 2px solid var(--coral);
+  color: var(--coral);
+  border-radius: 10px;
+  font-size: 24px;
+  height: 50px;
+  width: 50px;
+}
+
+#copyButton:hover {
+  cursor: pointer;
+  background: var(--coral);
+  color: var(--pearl);
+  border: var(--pearl);
+  transition: all 0.5s ease-in-out;
+}
+code {
+  border-radius: 6px;
+}
+.hljs-string {
+  color: var(--gun-powder) !important;
+}
+.hljs-number {
+  color: var(--ocean) !important;
+}
+.hljs-attr {
+  color: var(--coral) !important;
+  font-weight: bold;
+}
+.booking-success {
+  margin-bottom: 40px;
+  padding: 20px;
+  background: #d1cbcc;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.booking-success-text {
+  text-align: center;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.booking-success-title {
+  font-weight: 700;
+  font-size: 38px;
+}
+.booking-success-subtitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.code-before {
+  background-color: var(--gun-powder);
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  left: 0;
+  top: 0;
+  content: '';
+  opacity: 0;
+  border-radius: 6px;
+}
+.copy-message {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  background: var(--pearl);
+  padding: 10px;
+  border-radius: 6px;
+  z-index: 2;
+}
+.fadeInOut {
+  animation: fadeInOut 1s ease-out forwards;
+}
+.fadeInOutOpacity {
+  z-index: 1;
+  animation: fadeInOutOpacity 1s ease-out forwards;
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeInOutOpacity {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.booking-success-button {
+  margin-top: 15px;
+  width: 100%;
+  background: var(--coral);
+  color: var(--pearl);
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+}
+.booking-success-button:hover {
+  cursor: pointer;
+  background-color: var(--coral-hover);
+}
+.booking-success-button-a {
+  color: var(--pearl);
+  text-decoration: none;
+}

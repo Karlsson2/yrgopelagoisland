@@ -18,6 +18,8 @@ require 'vendor/autoload.php';
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@100;300;700&family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="icon" type="image/x-icon" href="/images/jh-favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+
 
 </head>
 

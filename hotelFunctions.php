@@ -197,6 +197,8 @@ function totalDates(string $startDate, string $endDate): int
 function makeBooking()
 {
     $_SESSION['errors'] = [];
+    $_SESSION['success'] = false;
+    $_SESSION['response'] = [];
     $client = client();
     if (
         isset($_POST["datefilter"]) &&
@@ -263,18 +265,14 @@ function makeBooking()
                             $bookingId = (int) insertBooking($startDate, $endDate, $selectedFeatures, $transferCode, $roomId, $totalCost);
                             //if the booking insertion is successfull, claim the money from the big bank
                             if (isset($bookingId)) {
-                                try {
-                                    $claimed = $client->request('POST', 'deposit', [
-                                        'form_params' => [
-                                            'user' => $_ENV['USER_NAME'],
-                                            'transferCode' => $transferCode
-                                        ]
-                                    ]);
-                                    bookingResponse($bookingId);
-                                } catch (Exception $e) {
-
-                                    echo $e->getMessage();
-                                }
+                                $client->request('POST', 'deposit', [
+                                    'form_params' => [
+                                        'user' => $_ENV['USER_NAME'],
+                                        'transferCode' => $transferCode
+                                    ]
+                                ]);
+                                bookingResponse($bookingId);
+                                redirect("room.php?room=" . $_POST["id"] . "#form-div");
                             } else {
                                 $_SESSION['errors'][] = "Error: The money could not be deposited, try again.";
                                 redirect("room.php?room=" . $_POST["id"] . "#errors");
@@ -309,8 +307,7 @@ function bookingResponse(int $bookingId)
     $booking = getBooking($bookingId);
     $features = getAllFeaturesWithBooking($bookingId);
     $room = getOneRoom((int) $booking["room_id"]);
-
-    $externalGreeting = ["greeting" => "Thank you for choosing Jurassic Hotel", "imageUrl" => "/images/thank-you.jpg"];
+    $externalGreeting = [["greeting" => "Thank you for choosing Jurassic Hotel", "imageUrl" => "/images/thank-you.jpg"]];
     $response = [
         [
             "island" => $_ENV["ISLAND"],
@@ -319,14 +316,14 @@ function bookingResponse(int $bookingId)
             "departure_date" => $booking["departure_date"],
             "room_type" => $room["category"],
             "total_cost" => $booking["total_cost"],
+            "booking_id" => $booking["id"],
             "stars" => $_ENV["STARS"],
             "features" => $features,
-            "addtional_info" => $externalGreeting,
+            "additional_info" => $externalGreeting,
         ]
     ];
-
-    header('Content-Type:application/json');
-    echo json_encode($response);
+    json_encode($response);
+    $_SESSION["response"] = $response;
 }
 
 function getBooking(int $bookingId)

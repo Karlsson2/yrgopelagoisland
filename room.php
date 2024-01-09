@@ -67,45 +67,72 @@ $features = getAllFeatures();
         </div>
     <?php endif; ?>
 
-    <div class="form-div">
-        <div class="form-title">Book a Stay</div>
-        <form action="hotelFunctions.php" method="POST" class="booking-form">
-            <input type="hidden" name="bookingForm" value="1">
-            <label for="datefilter">Select a Date</label>
-            <div class="input-wrapper">
-                <div class="icon-container"><i class="fa-regular fa-calendar"></i></div>
-                <input type="text" placeholder="Select a date..." name="datefilter" id="datefilter" required>
-            </div>
-            <label for="transfercode">Transfercode</label>
-            <div class="input-wrapper">
-                <div class="icon-container"><i class="fa-solid fa-key"></i></div>
-                <input type="text" name="transfercode" placeholder="Enter Transfercode here" required>
-            </div>
-            <div class="activities-title">Include an activity</div>
-            <div class="activities-card-container">
-                <?php foreach ($features as $feature) : ?>
-                    <div class="room-activities-card">
-                        <img src="<?= $feature["image"] ?>" alt="">
-                        <input data-price="<?= $feature["price"] ?>" class="feature-<?= $feature["id"] ?>" type="checkbox" name="selected_features[]" value="<?= $feature["id"] ?>">
-                        <div class="feature-description"><span class="coral-text">$<?= $feature["price"] ?></span> - <?= $feature["name"] ?></div>
 
-                    </div>
-                <?php endforeach; ?>
+    <?php if (isset($_SESSION["response"]) && is_array($_SESSION["response"])) : ?>
+        <?php $jsonString = json_encode($_SESSION["response"], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+
+        <div class="booking-success">
+            <div class="booking-success-text">
+                <div class="booking-success-title">Your Booking is confirmed!</div>
+                <div class="booking-success-subtitle"><?= $_SESSION["response"][0]["additional_info"][0]["greeting"] ?></div>
+                <div class="booking-success-information">Quote your booking reference: <span class="coral-text"><?= $_SESSION["response"][0]["booking_id"] ?> </span>when arriving at the hotel.</div>
+                <div class="booking-success-information">Please see your specific JSON below, use the smart clipboard button to copy it!</div>
             </div>
-            <div class="subtotal">Subtotal: $0</div>
-            <div class="discountTotal"></div>
-            <div class="total">Total Price: $0</div>
-            <input type="hidden" name="id" value="<?= $room["id"] ?>">
-            <input type="hidden" name="pricePerNight" id="pricePerNight" value="<?= $room["price_per_night"] ?>">
-            <button type="submit">Book <i class="fa-solid fa-arrow-right"></i></button>
-        </form>
-    </div>
+
+            <pre><code id="codeElement"> <?= $jsonString ?> </code><button id="copyButton"><i class="fa-regular fa-copy"></i></button><div class="code-before"></div><div class="copy-message">Copied to Clipboard!</div></pre>
+            <a class="booking-success-button-a" href="/room.php?room=<?= $room["id"] ?>">
+                <div class="booking-success-button">Book another stay <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+        </div>
+
+        <?php unset($_SESSION["response"]); ?>
+    <?php else : ?>
+
+
+        <div class="form-div" id="form-div">
+            <div class="form-title">Book a Stay</div>
+            <form action="hotelFunctions.php" method="POST" class="booking-form">
+                <input type="hidden" name="bookingForm" value="1">
+                <label for="datefilter">Select a Date</label>
+                <div class="input-wrapper">
+                    <div class="icon-container"><i class="fa-regular fa-calendar"></i></div>
+                    <input type="text" placeholder="Select a date..." name="datefilter" id="datefilter" required>
+                </div>
+                <label for="transfercode">Transfercode</label>
+                <div class="input-wrapper">
+                    <div class="icon-container"><i class="fa-solid fa-key"></i></div>
+                    <input type="text" name="transfercode" placeholder="Enter Transfercode here" required>
+                </div>
+                <div class="activities-title">Include an activity</div>
+                <div class="activities-card-container">
+                    <?php foreach ($features as $feature) : ?>
+                        <div class="room-activities-card">
+                            <img src="<?= $feature["image"] ?>" alt="">
+                            <input data-price="<?= $feature["price"] ?>" class="feature-<?= $feature["id"] ?>" type="checkbox" name="selected_features[]" value="<?= $feature["id"] ?>">
+                            <div class="feature-description"><span class="coral-text">$<?= $feature["price"] ?></span> - <?= $feature["name"] ?></div>
+
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="subtotal">Subtotal: $0</div>
+                <div class="discountTotal"></div>
+                <div class="total">Total Price: $0</div>
+                <input type="hidden" name="id" value="<?= $room["id"] ?>">
+                <input type="hidden" name="pricePerNight" id="pricePerNight" value="<?= $room["price_per_night"] ?>">
+                <button type="submit">Book <i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </div>
+
+    <?php endif; ?>
 </div>
 
 <?php require __DIR__ . "/dark-footer.php"; ?>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
 
 <script>
     <?php
@@ -185,6 +212,9 @@ $features = getAllFeatures();
             }
         );
     });
+
+
+    hljs.highlightAll();
 </script>
 <script type="text/javascript" src="room-script.js"></script>
 </body>
