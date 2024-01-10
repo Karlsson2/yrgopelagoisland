@@ -10,7 +10,6 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 session_start();
-
 /* 
 Here's something to start your career as a hotel manager.
 
@@ -21,7 +20,6 @@ One function to connect to the database you want (it will return a PDO object wh
 one function to create a guid,
 and one function to control if a guid is valid.
 */
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Form was submitted, check which form it was,
     if (isset($_POST["signupForm"])) {
@@ -50,6 +48,17 @@ function client()
     $client = new Client([
         // Base URI is used with relative requests
         'base_uri' => 'https://www.yrgopelag.se/centralbank/',
+        // You can set any number of default request options.
+        'timeout'  => 2.0,
+    ]);
+    return $client;
+}
+
+function dinoClient()
+{
+    $client = new Client([
+        // Base URI is used with relative requests
+        'base_uri' => 'https://dinosaur-facts-api.shultzlab.com/dinosaurs/random/',
         // You can set any number of default request options.
         'timeout'  => 2.0,
     ]);
@@ -194,6 +203,16 @@ function totalDates(string $startDate, string $endDate): int
     return $totalDays + 1;
 }
 
+function getDino(): string
+{
+    $client = dinoClient();
+
+    $response = $client->request('GET', '/dinosaurs/random/name');
+    $response = json_decode($response->getBody()->getContents());
+    return $response->Name;
+}
+
+
 function makeBooking()
 {
     $_SESSION['errors'] = [];
@@ -272,7 +291,7 @@ function makeBooking()
                                     ]
                                 ]);
                                 bookingResponse($bookingId);
-                                redirect("room.php?room=" . $_POST["id"] . "#form-div");
+                                redirect("room.php?room=" . $_POST["id"] . "#booking-success");
                             } else {
                                 $_SESSION['errors'][] = "Error: The money could not be deposited, try again.";
                                 redirect("room.php?room=" . $_POST["id"] . "#errors");
@@ -285,7 +304,7 @@ function makeBooking()
                         }
                     }
                 } catch (Exception $e) {
-                    echo $e->getMessage();
+                    $_SESSION['errors'][] = "Error: Issue trying to validate your transfercode at the server";
                 }
             } else {
                 $_SESSION['errors'][] = "Error: Transfercode is not correct";
@@ -307,7 +326,8 @@ function bookingResponse(int $bookingId)
     $booking = getBooking($bookingId);
     $features = getAllFeaturesWithBooking($bookingId);
     $room = getOneRoom((int) $booking["room_id"]);
-    $externalGreeting = [["greeting" => "Thank you for choosing Jurassic Hotel", "imageUrl" => "/images/thank-you.jpg"]];
+    $dino = getDino();
+    $externalGreeting = [["greeting" => "Thank you for choosing Jurassic Hotel", "dino" => $dino, "dinoURL" => "https://en.wikipedia.org/wiki/" . $dino]];
     $response = [
         [
             "island" => $_ENV["ISLAND"],
@@ -326,7 +346,7 @@ function bookingResponse(int $bookingId)
     $_SESSION["response"] = $response;
 }
 
-function getBooking(int $bookingId)
+function getBooking(int $bookingId): array
 {
     //return the booking with a particular id
     $dbName = "hotel.db";
@@ -337,7 +357,7 @@ function getBooking(int $bookingId)
     $booking = $query->fetch(PDO::FETCH_ASSOC);
     return $booking;
 }
-function getAllFeaturesWithBooking(int $bookingId)
+function getAllFeaturesWithBooking(int $bookingId): array
 {
     //function to get all the features for a particular booking
     $dbName = "hotel.db";
@@ -352,7 +372,7 @@ function getAllFeaturesWithBooking(int $bookingId)
     return $features;
 }
 
-function getFeature(int $featureId)
+function getFeature(int $featureId): array
 {
     // Function to get all the feature activities
     $dbName = "hotel.db";
@@ -366,7 +386,7 @@ function getFeature(int $featureId)
     return $feature;
 }
 
-function getBookings(int $roomId)
+function getBookings(int $roomId): array
 {
     //function to get all the bookings
     $dbName = "hotel.db";
@@ -379,7 +399,7 @@ function getBookings(int $roomId)
     return $bookings;
 }
 
-function getDiscounts(int $roomId)
+function getDiscounts(int $roomId): array
 {
     //Function to get all the discount for a particular room
     $dbName = "hotel.db";
@@ -392,7 +412,7 @@ function getDiscounts(int $roomId)
     return $discounts;
 }
 
-function loadMadeBookings(int $roomId)
+function loadMadeBookings(int $roomId): string
 {
     // Function to get all the bookings.
     // Generate an array of disabled individual dates
