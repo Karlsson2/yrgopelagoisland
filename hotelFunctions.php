@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+session_start();
 require 'vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -9,7 +10,7 @@ use GuzzleHttp\Client;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-session_start();
+
 /* 
 Here's something to start your career as a hotel manager.
 

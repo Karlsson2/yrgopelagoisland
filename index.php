@@ -1,7 +1,8 @@
 <?php
+require __DIR__ . "/hotelFunctions.php";
 require 'vendor/autoload.php';
 require __DIR__ . "/header.php";
-require __DIR__ . "/hotelFunctions.php";
+
 $rooms = getAllRooms();
 $features = getallFeatures();
 
@@ -42,7 +43,7 @@ $features = getallFeatures();
                 <!-- Slides -->
                 <?php foreach ($rooms as $room) : ?>
                     <div class="room-card swiper-slide">
-                        <a href="/room.php?room=<?= $room["id"] ?>">
+                        <a href="/../room.php?room=<?= $room["id"] ?>">
                             <div class="image-container">
                                 <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;background-size: cover;">
                                 </div>
@@ -73,7 +74,7 @@ $features = getallFeatures();
                                     </div>
                                 </div>
                                 <div class="button-div">
-                                    <a href="/room.php?room=<?= $room["id"] ?>" class="button">
+                                    <a href="/../room.php?room=<?= $room["id"] ?>" class="button">
                                         <span class="button-text">Book now </span><i class="fa-solid fa-arrow-right"></i>
 
                                     </a>
