@@ -6,11 +6,13 @@ This is a lovely island with a great hotel full of travellers wishing to have an
 
 In order to run the project, simply download and fill out your ENV with the following data:
 
-````API_KEY=your-api-key-here
+```
+API_KEY=your-api-key-here
 ISLAND_NAME="The name of your island"
 HOTEL_NAME="The name of your hotel"
 USER_NAME="Your username"
-STARS=4```
+STARS=4
+```
 
 The username and api-key can be retrieved from www.yrgopelag.se
 
@@ -20,7 +22,8 @@ Database is Sqlite and can be regenerated with the following code:
 
 Table creation:
 
-```CREATE TABLE IF NOT EXISTS rooms (id integer primary key AUTOINCREMENT, category varchar, price_per_night float, image1 varchar, image2 varchar, sleeps integer, view varchar, aircon BOOLEAN, description varchar);
+```
+CREATE TABLE IF NOT EXISTS rooms (id integer primary key AUTOINCREMENT, category varchar, price_per_night float, image1 varchar, image2 varchar, sleeps integer, view varchar, aircon BOOLEAN, description varchar);
 
 CREATE TABLE IF NOT EXISTS booking (id integer primary key AUTOINCREMENT, arrival_date date, departure_date date, transfercode varchar, total_cost float, room_id integer,
 FOREIGN KEY (room_id) REFERENCES rooms(id));
@@ -45,14 +48,14 @@ name VARCHAR,
 time date,
 rating integer,
 FOREIGN KEY (room_id) REFERENCES rooms(id)
-);```
+);
+```
 
 CREATE TABLE IF NOT EXISTS signups (id INTEGER PRIMARY KEY AUTOINCREMENT, email varchar);```
 
 Data insertion:
 
-````
-
+```
 -- Insert fake data into the 'rooms' table
 INSERT INTO rooms (id, category, price_per_night, image1, image2,sleeps,view,aircon,description)
 VALUES
@@ -81,7 +84,8 @@ INSERT INTO discounts (room_id, discount_percentage, description, days_required)
 -- Discounts for Room 3 (Suite)
 INSERT INTO discounts (room_id, discount_percentage, description, days_required) VALUES (3, 0.1, '10% Off for 3 Days Stay', 3);
 INSERT INTO discounts (room_id, discount_percentage, description, days_required) VALUES (3, 0.18, '18% Off for 8 Days Stay', 8);
-INSERT INTO discounts (room_id, discount_percentage, description, days_required) VALUES (3, 0.25, '25% Off for 12 Days Stay', 12);```
+INSERT INTO discounts (room_id, discount_percentage, description, days_required) VALUES (3, 0.25, '25% Off for 12 Days Stay', 12);
+```
 
 # Code review
 
