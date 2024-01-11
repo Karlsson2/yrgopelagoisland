@@ -11,6 +11,7 @@ if (isset($_GET["room"])) {
 }
 $discounts = getDiscounts((int) $room["id"]);
 $features = getAllFeatures();
+
 ?>
 
 <div class="header-image" style="background-image: url('<?= $room["image1"] ?>');">
@@ -102,7 +103,7 @@ $features = getAllFeatures();
                 <label for="transfercode">Transfercode</label>
                 <div class="input-wrapper">
                     <div class="icon-container"><i class="fa-solid fa-key"></i></div>
-                    <input type="text" name="transfercode" placeholder="Enter Transfercode here" required>
+                    <input type="text" name="transfercode" id="transfercode" placeholder="Enter Transfercode here" required>
                 </div>
                 <div class="activities-title">Include an activity</div>
                 <div class="activities-card-container">
@@ -144,19 +145,22 @@ $features = getAllFeatures();
     $roomImages[] = $room["image2"];
     echo "const disabledDates1 = " . json_encode($disabledDates) . ";";
     echo "const roomImages1 =" . json_encode($roomImages) . ";";
+
     ?>
     const disabledDates = JSON.parse(JSON.stringify(disabledDates1));
     const roomImages = JSON.parse(JSON.stringify(roomImages1));
     const backgroundContainer = document.querySelector('.header-image');
     let index = 0;
 
-    setInterval(function() {
-        // Update background image
-        backgroundContainer.style.backgroundImage = `url(${roomImages[index]})`;
+    window.onload = function() {
+        setInterval(function() {
+            // Update background image
+            backgroundContainer.style.backgroundImage = `url(${roomImages[index]})`;
 
-        // Increment the index or reset to 0 if it reaches the end
-        index = (index + 1) % roomImages.length;
-    }, 3000); // Change background every 5 seconds 
+            // Increment the index or reset to 0 if it reaches the end
+            index = (index + 1) % roomImages.length;
+        }, 3000); // Change background every 3 seconds 
+    }
 
 
     $(function() {

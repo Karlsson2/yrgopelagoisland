@@ -1,4 +1,3 @@
-const headerImage = document.querySelector('.header-image');
 const bookingForm = document.querySelector('.booking-form');
 const dates = document.querySelector('input[name="datefilter"');
 const roomPrice = document.getElementById('pricePerNight');
