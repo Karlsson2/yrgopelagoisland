@@ -6,11 +6,11 @@ This is a lovely island with a great hotel full of travellers wishing to have an
 
 In order to run the project, simply download and fill out your ENV with the following data:
 
-´´´API_KEY=your-api-key-here
+````API_KEY=your-api-key-here
 ISLAND_NAME="The name of your island"
 HOTEL_NAME="The name of your hotel"
 USER_NAME="Your username"
-STARS=4´´´
+STARS=4```
 
 The username and api-key can be retrieved from www.yrgopelag.se
 
@@ -95,3 +95,4 @@ INSERT INTO discounts (room_id, discount_percentage, description, days_required)
 8. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
 9. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
 10. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
+````
