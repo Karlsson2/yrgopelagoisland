@@ -58,7 +58,7 @@ input[type='email'] {
   background-size: cover;
   background-position: 50% 70%;
   position: relative;
-  margin-top: -111px;
+  margin-top: -89px;
   transition: background-image 1s linear;
 }
 .container {
@@ -387,7 +387,7 @@ code {
   background-size: cover;
   background-position: center;
   position: relative;
-  margin-top: -111px;
+  margin-top: -89px;
 }
 .header-title {
   font-size: 64px;
@@ -1128,5 +1128,10 @@ input[type='checkbox']:checked {
     width: 50px;
     height: 50px;
     top: -25px;
+  }
+}
+@-moz-document url-prefix() {
+  .nav-bar {
+    padding: 0px; /* Your specific padding for Firefox */
   }
 }
