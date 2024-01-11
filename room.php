@@ -74,7 +74,7 @@ $features = getAllFeatures();
             <div class="booking-success-text">
                 <div class="booking-success-title">Your Booking is confirmed!</div>
                 <div class="booking-success-subtitle">Booking ref: <span class="coral-text"><?= $_SESSION["response"][0]["booking_id"] ?> </span></div>
-                <div class="dino-info"><img src="/images/dino-icon.png" alt="" class="dino-icon">
+                <div class="dino-info"><img src="images/dino-icon.png" alt="" class="dino-icon">
                     <div class="dino-text">Before your trip, read some more about this cool random dino: <a href="<?= $_SESSION["response"][0]["additional_info"][0]["dinoURL"] ?>"><?= $_SESSION["response"][0]["additional_info"][0]["dino"] ?></a>.</div>
                 </div>
                 <div class="booking-success-information">Please see your specific JSON below, use the smart clipboard button to copy it!</div>
