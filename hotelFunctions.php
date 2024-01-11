@@ -34,10 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         redirect($redirect . "#sign-up");
     }
-
-    if (isset($_POST["reviewForm"])) {
-        // TODO:createReview();
-    }
     if (isset($_POST["bookingForm"])) {
         makebooking();
     }
@@ -205,6 +201,7 @@ function totalDates(string $startDate, string $endDate): int
 }
 
 function getDino(): string
+//get a random dino from the api
 {
     $client = dinoClient();
 

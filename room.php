@@ -137,7 +137,7 @@ $features = getAllFeatures();
 
 <script>
     <?php
-    // Your PHP code to generate the disabledDates array
+    //PHP code to generate the disabledDates array
     $disabledDates = loadMadeBookings((int)$room["id"]);
     $roomImages = [];
     $roomImages[] = $room["image1"];
@@ -156,7 +156,7 @@ $features = getAllFeatures();
 
         // Increment the index or reset to 0 if it reaches the end
         index = (index + 1) % roomImages.length;
-    }, 3000); // Change background every 5 seconds (adjust as needed)
+    }, 3000); // Change background every 5 seconds 
 
 
     $(function() {
@@ -175,18 +175,7 @@ $features = getAllFeatures();
                     return disabledDates.includes(dateString);
                 },
             },
-            function(start, end, label) {
-                // Manually trigger the change event
-                console.log(
-                    'New date range selected: ' +
-                    start.format('DD-MM-YYYY') +
-                    ' to ' +
-                    end.format('DD-MM-YYYY') +
-                    ' (predefined range: ' +
-                    label +
-                    ')'
-                );
-            }
+            function(start, end, label) {}
         );
 
         $('input[name="datefilter"]').on(

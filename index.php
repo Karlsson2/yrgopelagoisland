@@ -20,7 +20,6 @@ $features = getallFeatures();
         <div class="about-us-container" id="about-us">
             <div class="about-us">About Us <span class="coral-text">.</span></div>
             <div class="about-us-text">Welcome to Jurassic Hotel, an extraordinary retreat on a lush Jurassic island. Our hotel invites you to step into a world frozen in time, where the enchanting allure of ancient dinosaurs coexists with modern luxury.<br /><br /> Nestled amid breathtaking scenery, our accommodations seamlessly blend comfort with adventure. Whether you're an intrepid explorer seeking <a href="activities.php" class="coral-text">adventure</a>, a nature enthusiast, or a family seeking a unique getaway, Jurassic Hotel promises an unforgettable experience.</div>
-
         </div>
     </div>
 </div>
@@ -33,14 +32,10 @@ $features = getallFeatures();
     </div>
 </div>
 <div class="container light-background" id="rooms">
-    <!-- Slider main container -->
     <div class=" room-container">
         <div class="container-title">Our Rooms</div>
-
         <div class="swiper">
-            <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
-                <!-- Slides -->
                 <?php foreach ($rooms as $room) : ?>
                     <div class="room-card swiper-slide">
                         <a href="room.php?room=<?= $room["id"] ?>">
@@ -70,20 +65,16 @@ $features = getallFeatures();
                                         <?php else : ?>
                                             <i class="fa-regular fa-snowflake"></i> No Aircon
                                         <?php endif; ?>
-
                                     </div>
                                 </div>
                                 <div class="button-div">
                                     <a href="room.php?room=<?= $room["id"] ?>" class="button">
                                         <span class="button-text">Book now </span><i class="fa-solid fa-arrow-right"></i>
-
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 <?php endforeach; ?>
             </div>
             <div class="swiper-button-prev"></div>
@@ -91,7 +82,6 @@ $features = getallFeatures();
         </div>
     </div>
 </div>
-
 <div class="dark-background">
     <div class="container">
         <div class="activities-container">
@@ -106,10 +96,8 @@ $features = getallFeatures();
                     </div>
                 </div>
                 <div class="activities-images">
-
                     <img src="<?= $features[1]["image"] ?>" class="activities-image-<?= $key ?>" alt="">
                 </div>
-
             </div>
         </div>
     </div>
@@ -121,8 +109,6 @@ $features = getallFeatures();
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-
 </body>
 
 </html>
