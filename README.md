@@ -22,7 +22,7 @@ Database is Sqlite and can be regenerated with the following code:
 
 Table creation:
 
-```
+````
 CREATE TABLE IF NOT EXISTS rooms (id integer primary key AUTOINCREMENT, category varchar, price_per_night float, image1 varchar, image2 varchar, sleeps integer, view varchar, aircon BOOLEAN, description varchar);
 
 CREATE TABLE IF NOT EXISTS booking (id integer primary key AUTOINCREMENT, arrival_date date, departure_date date, transfercode varchar, total_cost float, room_id integer,
@@ -49,9 +49,8 @@ time date,
 rating integer,
 FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
-```
-
 CREATE TABLE IF NOT EXISTS signups (id INTEGER PRIMARY KEY AUTOINCREMENT, email varchar);```
+````
 
 Data insertion:
 
@@ -99,7 +98,3 @@ INSERT INTO discounts (room_id, discount_percentage, description, days_required)
 8. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
 9. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
 10. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-
-```
-
-```

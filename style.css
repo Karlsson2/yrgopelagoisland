@@ -58,8 +58,8 @@ input[type='email'] {
   background-size: cover;
   background-position: 50% 70%;
   position: relative;
-  margin-top: -90px;
-  transition: background-image 1s ease-in-out;
+  margin-top: -111px;
+  transition: background-image 1s linear;
 }
 .container {
   margin: 0 auto;
@@ -387,7 +387,7 @@ code {
   background-size: cover;
   background-position: center;
   position: relative;
-  margin-top: -90px;
+  margin-top: -111px;
 }
 .header-title {
   font-size: 64px;
@@ -958,6 +958,7 @@ input[type='checkbox']:checked {
 }
 .activity-description {
   padding: 15px;
+  width: calc(100% * 2 / 3);
 }
 .activities-title {
   font-weight: 700;
