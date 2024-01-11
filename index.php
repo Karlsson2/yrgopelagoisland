@@ -19,7 +19,7 @@ $features = getallFeatures();
     <div class="container">
         <div class="about-us-container" id="about-us">
             <div class="about-us">About Us <span class="coral-text">.</span></div>
-            <div class="about-us-text">Welcome to Jurassic Hotel, an extraordinary retreat on a lush Jurassic island. Our hotel invites you to step into a world frozen in time, where the enchanting allure of ancient dinosaurs coexists with modern luxury.<br /><br /> Nestled amid breathtaking scenery, our accommodations seamlessly blend comfort with adventure. Whether you're an intrepid explorer seeking <a href="/activities.php" class="coral-text">adventure</a>, a nature enthusiast, or a family seeking a unique getaway, Jurassic Hotel promises an unforgettable experience.</div>
+            <div class="about-us-text">Welcome to Jurassic Hotel, an extraordinary retreat on a lush Jurassic island. Our hotel invites you to step into a world frozen in time, where the enchanting allure of ancient dinosaurs coexists with modern luxury.<br /><br /> Nestled amid breathtaking scenery, our accommodations seamlessly blend comfort with adventure. Whether you're an intrepid explorer seeking <a href="activities.php" class="coral-text">adventure</a>, a nature enthusiast, or a family seeking a unique getaway, Jurassic Hotel promises an unforgettable experience.</div>
 
         </div>
     </div>
@@ -43,7 +43,7 @@ $features = getallFeatures();
                 <!-- Slides -->
                 <?php foreach ($rooms as $room) : ?>
                     <div class="room-card swiper-slide">
-                        <a href="/../room.php?room=<?= $room["id"] ?>">
+                        <a href="room.php?room=<?= $room["id"] ?>">
                             <div class="image-container">
                                 <div class="room-image" style="background-image:url(<?= $room["image1"] ?>); background-position: center;background-size: cover;">
                                 </div>
@@ -74,7 +74,7 @@ $features = getallFeatures();
                                     </div>
                                 </div>
                                 <div class="button-div">
-                                    <a href="/../room.php?room=<?= $room["id"] ?>" class="button">
+                                    <a href="room.php?room=<?= $room["id"] ?>" class="button">
                                         <span class="button-text">Book now </span><i class="fa-solid fa-arrow-right"></i>
 
                                     </a>
@@ -100,7 +100,7 @@ $features = getallFeatures();
                     <div class="container-title">The Activities <span class="coral-text">.</span></div>
                     <div class="activities-description">Embark on an unforgettable adventure at our dinosaur-themed hotel with four exhilarating activities. Soar through the skies as you experience the thrill of <span class="coral-text">Flying with Dinosaurs</span>,take a dip into prehistoric waters with <span class="coral-text">Swimming with Dinosaurs</span> witness the magic of life at the <span class="coral-text">Incubation room</span> and explore the wonders of a bygone era on an exciting <span class="coral-text">Dinosaur Safari</span>. Immerse yourself in the fascinating world of dinosaurs, creating memories that will last a lifetime in these unique and thrilling hotel experiences.</div>
                     <div class="button-div">
-                        <a href="/activities.php" class="activities-button">
+                        <a href="activities.php" class="activities-button">
                             <span class="button-text">Read more </span><i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>

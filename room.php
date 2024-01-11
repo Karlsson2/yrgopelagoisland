@@ -81,7 +81,7 @@ $features = getAllFeatures();
             </div>
 
             <pre><code id="codeElement"> <?= $jsonString ?> </code><button id="copyButton"><i class="fa-regular fa-copy"></i></button><div class="code-before"></div><div class="copy-message">Copied to Clipboard!</div></pre>
-            <a class="booking-success-button-a" href="/room.php?room=<?= $room["id"] ?>">
+            <a class="booking-success-button-a" href="room.php?room=<?= $room["id"] ?>">
                 <div class="booking-success-button">Book another stay <i class="fa-solid fa-arrow-right"></i></div>
             </a>
         </div>

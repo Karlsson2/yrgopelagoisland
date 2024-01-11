@@ -1,7 +1,7 @@
 <div class="light-background">
     <div class="footer">
         <div class="sign-up" id="sign-up">
-            <form action="/hotelFunctions.php" method="POST">
+            <form action="hotelFunctions.php" method="POST">
                 <input type="hidden" name="signupForm" value="1">
                 <input type="hidden" id="redirectInput" name="redirect" value="">
 
@@ -16,7 +16,7 @@
             <div class="footer-links">
                 <div class="footer-title">Links</div>
                 <a href="index.php#rooms">Rooms</a>
-                <a href="/activities.php">Activities</a>
+                <a href="activities.php">Activities</a>
             </div>
             <div class="contact-us">
                 <div class="footer-title">Contact us</div>

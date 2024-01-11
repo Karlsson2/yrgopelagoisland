@@ -1,7 +1,8 @@
 <?php
+require __DIR__ . "/hotelFunctions.php";
 require 'vendor/autoload.php';
 require __DIR__ . "/header.php";
-require __DIR__ . "/hotelFunctions.php";
+
 $random = rand(0, 3);
 $features = getAllFeatures();
 $randomFeature = $features[$random];
