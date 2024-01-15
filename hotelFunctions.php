@@ -227,6 +227,7 @@ function makeBooking()
 
         $dates = trim(htmlspecialchars($_POST["datefilter"]));
         $transferCode = htmlspecialchars($_POST["transfercode"]);
+        //TODO: get the price from the DB instead of from the form, even though its "Hidden".
         $pricePerNight = htmlspecialchars($_POST["pricePerNight"]);
         $roomId = htmlspecialchars($_POST["id"]);
         $fullDates = explode("-", $dates);
