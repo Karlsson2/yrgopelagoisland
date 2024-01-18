@@ -88,13 +88,15 @@ INSERT INTO discounts (room_id, discount_percentage, description, days_required)
 
 # Code review
 
-1. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-2. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-3. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-4. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-5. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-6. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
-7. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
+1. room.php:211 - Maybe a comment here? calling a function to do what..
+2. hotelFunctions:217 - Is this always false..? tried finding where it was changed but couldn't find it. Looks weird to me to set a session called success to false when someone wants to make a booking.
+3. example.js:10-15 - <input type="hidden" name="bookingForm" value="1"> Could this be changed manually in the inspector to pay less when its sent to the makebooking function?
+4. room.php:122-123 - If i want to book the luxury room but i try and put in another id for the cheaper option, could i get away with it?
+5. hotelFunctions:214-319 - Your makeBooking function is 100 lines long. Perhaps you could make the guzzle requests into seperate functions for better readability.
+6. hotelFunctions:281 - If the amount is the same as totalcost or bigger, its okay.. xD So if the customer send you more money then you need you just take it, smart and devious! 
+7. room-script.js:122-165 - Maybe add some comments to this section, you had alot of nice comments before this :)
 8. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
 9. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
 10. example.js:10-15 - Remember to think about X and this could be refactored using the amazing Y function.
+
+    Really hard for me to find things to potencially improve on. As this code is miles ahead of me in structure and overall greatness! Loved the attention to detail with the copy to clipboard ability on the JSON message and the random header image for the activities page to name a few :)
